@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { BrowserRouter } from 'react-router-dom';
 import RootNavigationContainer from '@routes/containers/RootNavigationContainer';
+import initOpenAI from '@libs/openai';
 
 const firebaseConfig = {
   apiKey: process.env.REACT_APP_API_KEY,
@@ -18,6 +19,10 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 function App() {
+  useEffect(() => {
+    initOpenAI();
+  }, []);
+
   return (
     <BrowserRouter>
       <RootNavigationContainer />
