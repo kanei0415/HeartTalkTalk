@@ -1,3 +1,4 @@
+import images from '@assets/images';
 import CButtonContainer from '@components/common/CButton/containers/CButtonContainer';
 import CInputContainer from '@components/common/CInput/containers/CInputContainer';
 import React from 'react';
@@ -7,6 +8,7 @@ type Props = {
   onPasswordChanged: (password: string) => void;
   onAdminLoginClicked: () => void;
   loginBtnActive: boolean;
+  onGoogleLoginClicked: () => void;
 };
 
 const AdminLogin = ({
@@ -14,6 +16,7 @@ const AdminLogin = ({
   onPasswordChanged,
   onAdminLoginClicked,
   loginBtnActive,
+  onGoogleLoginClicked,
 }: Props) => {
   return (
     <section className='flex justify-center items-center h-full'>
@@ -45,6 +48,17 @@ const AdminLogin = ({
           onClicked={onAdminLoginClicked}
           activate={loginBtnActive}
         />
+        <button
+          style={{ height: 48, borderRadius: 24, marginTop: 24 }}
+          onClick={onGoogleLoginClicked}
+          className='w-full flex flex-row items-center p-4 bg-stone text-base font-regular text-white justify-center'>
+          <img
+            style={{ marginRight: 8 }}
+            src={images.landing.google}
+            alt='google login'
+          />
+          {'구글 계정으로 로그인 하기'}
+        </button>
       </article>
     </section>
   );

@@ -2,6 +2,7 @@ export type WebStorageType = 'SESSION' | 'LOCAL';
 
 export const STORAGE_KEYS = {
   uid: '@UID_KEY',
+  adminUid: '@ADMIN_UID_KEY',
 } as const;
 
 export type StorageKeyType = (typeof STORAGE_KEYS)[keyof typeof STORAGE_KEYS];

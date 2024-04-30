@@ -5,6 +5,7 @@ import {
   FIRESTORE_COLLECTIONS,
   FireStoreAdminType,
   getDocDataFromFirestore,
+  googleLogin,
   login,
 } from '@libs/firebase';
 import useRoute from '@hooks/useRoutes';
@@ -70,7 +71,7 @@ const AdminLoginContainer = () => {
       )) as FireStoreAdminType;
 
       if (adminDocData) {
-        setStorageData('LOCAL', STORAGE_KEYS.uid, user.uid);
+        setStorageData('LOCAL', STORAGE_KEYS.adminUid, user.uid);
 
         __updateAdminInfo({
           name: adminDocData.name,
@@ -93,6 +94,25 @@ const AdminLoginContainer = () => {
     __updateAdminInfo,
   ]);
 
+  const onGoogleLoginClicked = useCallback(async () => {
+    const [uc] = await googleLogin();
+
+    const docData = await getDocDataFromFirestore(
+      FIRESTORE_COLLECTIONS.admin,
+      uc.user.uid,
+    );
+
+    if (docData) {
+      setStorageData('LOCAL', STORAGE_KEYS.adminUid, uc.user.uid);
+
+      __updateAdminInfo(docData as FireStoreAdminType);
+
+      __routeWithAdminNavigation(ADMIN_ROUTE.MAIN);
+    } else {
+      alert('계정 정보가 없습니다!');
+    }
+  }, [__updateAdminInfo, __routeWithAdminNavigation]);
+
   useEffect(() => {
     checkLoginInfo();
   }, [checkLoginInfo]);
@@ -103,6 +123,7 @@ const AdminLoginContainer = () => {
       onPasswordChanged={onPasswordChanged}
       onAdminLoginClicked={onAdminLoginClicked}
       loginBtnActive={loginBtnActive}
+      onGoogleLoginClicked={onGoogleLoginClicked}
     />
   );
 };

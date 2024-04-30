@@ -57,6 +57,13 @@ export const FUNCTION_LIST = {
   initializeCreatedUser: 'InitializeCreatedUser',
 } as const;
 
+export const PROMPTS = {
+  counselStartMessagePrompt: 'COUNSEL_START_MESSAGE_PROMPT',
+  resultMessagePrompt: 'RESULT_MESSAGE_PROMPT',
+  titleMessagePrompt: 'TITLE_MESSAGE_PROMPT',
+  responseMessagePrompt: 'RESPONSE_MESSAGE_PROMPT',
+} as const;
+
 export const newChattingCreateFunction = httpsCallable<
   { uid: string; createdAt: number },
   { success: boolean; message: string }
@@ -94,6 +101,7 @@ export const FIRESTORE_COLLECTIONS = {
   admin: 'Admins',
   serveyTestProblem: 'ServeyTestProblems',
   user: 'Users',
+  prompts: 'Prompts',
   chatting: 'Chattings',
   chattings: {
     chattingItem: 'ChattingItems',
@@ -114,6 +122,10 @@ export type FireStoreUserType = {
   image: string | null;
   days: number;
   createdAt: number;
+};
+
+export type FireStorePromptType = {
+  contents: string;
 };
 
 export type FireStoreChattingItemsType = {
