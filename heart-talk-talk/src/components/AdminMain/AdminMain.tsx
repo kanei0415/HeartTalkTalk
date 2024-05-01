@@ -11,6 +11,8 @@ type Props = {
   onTabClicked: (tab: string) => void;
   onPromptChanged: (newValue: string) => void;
   onLogoutClicked: () => void;
+  onUpdateBtnActivate: boolean;
+  onUpdateBtnClicked: () => void;
 };
 
 const AdminMain = ({
@@ -21,6 +23,8 @@ const AdminMain = ({
   onTabClicked,
   onPromptChanged,
   onLogoutClicked,
+  onUpdateBtnActivate,
+  onUpdateBtnClicked,
 }: Props) => {
   return (
     <article className='flex flex-row w-full h-full p-4'>
@@ -81,9 +85,9 @@ const AdminMain = ({
           />
           <div style={{ height: 24 }}></div>
           <CButtonContainer
-            onClicked={() => {}}
+            onClicked={onUpdateBtnClicked}
             label='프롬프트 변경'
-            activate
+            activate={onUpdateBtnActivate}
           />
         </section>
       )}

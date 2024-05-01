@@ -159,6 +159,10 @@ export async function getDocDataFromFirestore(
   return { ...docSnapshot.data() };
 }
 
+export function getDocRefFromFirestore(collection: string, path: string) {
+  return doc(firestore, collection, path);
+}
+
 export async function getAllDocDataFromFireStore(path: string) {
   const qs = await getDocs(query(collection(firestore, path)));
 

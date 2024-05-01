@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import AdminMain from '../AdminMain';
 import useRoute from '@hooks/useRoutes';
 import {
@@ -6,6 +6,7 @@ import {
   FireStorePromptType,
   PROMPTS,
   getDocDataFromFirestore,
+  setDocDataToFirestore,
 } from '@libs/firebase';
 import useAdmin from '@hooks/store/useAdmin';
 import {
@@ -19,8 +20,12 @@ const AdminMainContainer = () => {
   const { admin, __flushInfo } = useAdmin();
   const [prompt, setPrompt] = useState('');
   const [newPrompt, setNewPrompt] = useState('');
-  const [tabs, setTabs] = useState<string[]>(Object.values(PROMPTS));
+  const [tabs] = useState<string[]>(Object.values(PROMPTS));
   const [currentTab, setCurrentTab] = useState<string | null>(null);
+
+  const onUpdateBtnActivate = useMemo(() => {
+    return newPrompt !== '' && newPrompt !== prompt;
+  }, [newPrompt, prompt]);
 
   const loadPrompt = useCallback(async (tab: string) => {
     const data = (await getDocDataFromFirestore(
@@ -69,6 +74,16 @@ const AdminMainContainer = () => {
     setNewPrompt(newValue);
   }, []);
 
+  const onUpdateBtnClicked = useCallback(async () => {
+    if (!currentTab) {
+      return;
+    }
+
+    await setDocDataToFirestore(FIRESTORE_COLLECTIONS.prompts, currentTab, {
+      contents: newPrompt,
+    } satisfies FireStorePromptType);
+  }, [currentTab, newPrompt]);
+
   useEffect(() => {
     checkAdmin();
   }, [checkAdmin]);
@@ -88,6 +103,8 @@ const AdminMainContainer = () => {
       onTabClicked={onTabClicked}
       onPromptChanged={onPromptChanged}
       onLogoutClicked={onLogoutClicked}
+      onUpdateBtnActivate={onUpdateBtnActivate}
+      onUpdateBtnClicked={onUpdateBtnClicked}
     />
   );
 };
