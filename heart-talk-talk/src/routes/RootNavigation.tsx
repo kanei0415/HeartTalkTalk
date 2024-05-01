@@ -1,15 +1,33 @@
 import LandingContainer from '@components/Landing/containers/LandingContainer';
 import React from 'react';
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, To } from 'react-router-dom';
+import AdminNavigaionContainer from './containers/AdminNavigationContainer';
+import NotFoundContainer from '@components/NotFound/containers/NotFoundContainer';
+import MainContainer from '@components/Main/containers/MainContainer';
+import SignupContainer from '@components/Signup/containers/SignupContainer';
+import ServeyContainer from '@components/Servey/containers/ServeyContainer';
 
 export const ROOT_ROUTES = {
   LANDING: '/',
-};
+  MAIN: '/main',
+  SIGNUP: '/signup',
+  SERVEY: '/servey',
+  ADMIN: '/admin/*',
+  NOT_FOUND: '*',
+} as const;
 
 const RootNavigation = () => {
   return (
     <Routes>
       <Route path={ROOT_ROUTES.LANDING} element={<LandingContainer />} />
+      <Route path={ROOT_ROUTES.MAIN} element={<MainContainer />} />
+      <Route path={ROOT_ROUTES.SIGNUP} element={<SignupContainer />} />
+      <Route path={ROOT_ROUTES.SERVEY} element={<ServeyContainer />} />
+      <Route path={ROOT_ROUTES.ADMIN} element={<AdminNavigaionContainer />} />
+      <Route
+        path={ROOT_ROUTES.NOT_FOUND}
+        element={<NotFoundContainer backBtnDest={-1 as To} />}
+      />
     </Routes>
   );
 };
