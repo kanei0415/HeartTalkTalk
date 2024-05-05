@@ -1,0 +1,593 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 56;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		BC7C89672BE439DF001F303A /* HeartTalkTalkAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7C89662BE439DF001F303A /* HeartTalkTalkAppApp.swift */; };
+		BC7C89692BE439DF001F303A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7C89682BE439DF001F303A /* ContentView.swift */; };
+		BC7C896B2BE439DF001F303A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC7C896A2BE439DF001F303A /* Assets.xcassets */; };
+		BC7C896E2BE439DF001F303A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BC7C896D2BE439DF001F303A /* Preview Assets.xcassets */; };
+		BC7C89782BE439E0001F303A /* HeartTalkTalkAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7C89772BE439E0001F303A /* HeartTalkTalkAppTests.swift */; };
+		BC7C89822BE439E0001F303A /* HeartTalkTalkAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7C89812BE439E0001F303A /* HeartTalkTalkAppUITests.swift */; };
+		BC7C89842BE439E0001F303A /* HeartTalkTalkAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7C89832BE439E0001F303A /* HeartTalkTalkAppUITestsLaunchTests.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		BC7C89742BE439E0001F303A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC7C895B2BE439DF001F303A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BC7C89622BE439DF001F303A;
+			remoteInfo = HeartTalkTalkApp;
+		};
+		BC7C897E2BE439E0001F303A /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BC7C895B2BE439DF001F303A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = BC7C89622BE439DF001F303A;
+			remoteInfo = HeartTalkTalkApp;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		BC7C89632BE439DF001F303A /* HeartTalkTalkApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HeartTalkTalkApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC7C89662BE439DF001F303A /* HeartTalkTalkAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartTalkTalkAppApp.swift; sourceTree = "<group>"; };
+		BC7C89682BE439DF001F303A /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		BC7C896A2BE439DF001F303A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		BC7C896D2BE439DF001F303A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
+		BC7C89732BE439E0001F303A /* HeartTalkTalkAppTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HeartTalkTalkAppTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC7C89772BE439E0001F303A /* HeartTalkTalkAppTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartTalkTalkAppTests.swift; sourceTree = "<group>"; };
+		BC7C897D2BE439E0001F303A /* HeartTalkTalkAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HeartTalkTalkAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		BC7C89812BE439E0001F303A /* HeartTalkTalkAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartTalkTalkAppUITests.swift; sourceTree = "<group>"; };
+		BC7C89832BE439E0001F303A /* HeartTalkTalkAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartTalkTalkAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		BC7C89602BE439DF001F303A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC7C89702BE439E0001F303A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC7C897A2BE439E0001F303A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		BC7C895A2BE439DF001F303A = {
+			isa = PBXGroup;
+			children = (
+				BC7C89652BE439DF001F303A /* HeartTalkTalkApp */,
+				BC7C89762BE439E0001F303A /* HeartTalkTalkAppTests */,
+				BC7C89802BE439E0001F303A /* HeartTalkTalkAppUITests */,
+				BC7C89642BE439DF001F303A /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		BC7C89642BE439DF001F303A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				BC7C89632BE439DF001F303A /* HeartTalkTalkApp.app */,
+				BC7C89732BE439E0001F303A /* HeartTalkTalkAppTests.xctest */,
+				BC7C897D2BE439E0001F303A /* HeartTalkTalkAppUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		BC7C89652BE439DF001F303A /* HeartTalkTalkApp */ = {
+			isa = PBXGroup;
+			children = (
+				BC7C89662BE439DF001F303A /* HeartTalkTalkAppApp.swift */,
+				BC7C89682BE439DF001F303A /* ContentView.swift */,
+				BC7C896A2BE439DF001F303A /* Assets.xcassets */,
+				BC7C896C2BE439DF001F303A /* Preview Content */,
+			);
+			path = HeartTalkTalkApp;
+			sourceTree = "<group>";
+		};
+		BC7C896C2BE439DF001F303A /* Preview Content */ = {
+			isa = PBXGroup;
+			children = (
+				BC7C896D2BE439DF001F303A /* Preview Assets.xcassets */,
+			);
+			path = "Preview Content";
+			sourceTree = "<group>";
+		};
+		BC7C89762BE439E0001F303A /* HeartTalkTalkAppTests */ = {
+			isa = PBXGroup;
+			children = (
+				BC7C89772BE439E0001F303A /* HeartTalkTalkAppTests.swift */,
+			);
+			path = HeartTalkTalkAppTests;
+			sourceTree = "<group>";
+		};
+		BC7C89802BE439E0001F303A /* HeartTalkTalkAppUITests */ = {
+			isa = PBXGroup;
+			children = (
+				BC7C89812BE439E0001F303A /* HeartTalkTalkAppUITests.swift */,
+				BC7C89832BE439E0001F303A /* HeartTalkTalkAppUITestsLaunchTests.swift */,
+			);
+			path = HeartTalkTalkAppUITests;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		BC7C89622BE439DF001F303A /* HeartTalkTalkApp */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC7C89872BE439E0001F303A /* Build configuration list for PBXNativeTarget "HeartTalkTalkApp" */;
+			buildPhases = (
+				BC7C895F2BE439DF001F303A /* Sources */,
+				BC7C89602BE439DF001F303A /* Frameworks */,
+				BC7C89612BE439DF001F303A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HeartTalkTalkApp;
+			productName = HeartTalkTalkApp;
+			productReference = BC7C89632BE439DF001F303A /* HeartTalkTalkApp.app */;
+			productType = "com.apple.product-type.application";
+		};
+		BC7C89722BE439E0001F303A /* HeartTalkTalkAppTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC7C898A2BE439E0001F303A /* Build configuration list for PBXNativeTarget "HeartTalkTalkAppTests" */;
+			buildPhases = (
+				BC7C896F2BE439E0001F303A /* Sources */,
+				BC7C89702BE439E0001F303A /* Frameworks */,
+				BC7C89712BE439E0001F303A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BC7C89752BE439E0001F303A /* PBXTargetDependency */,
+			);
+			name = HeartTalkTalkAppTests;
+			productName = HeartTalkTalkAppTests;
+			productReference = BC7C89732BE439E0001F303A /* HeartTalkTalkAppTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		BC7C897C2BE439E0001F303A /* HeartTalkTalkAppUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = BC7C898D2BE439E0001F303A /* Build configuration list for PBXNativeTarget "HeartTalkTalkAppUITests" */;
+			buildPhases = (
+				BC7C89792BE439E0001F303A /* Sources */,
+				BC7C897A2BE439E0001F303A /* Frameworks */,
+				BC7C897B2BE439E0001F303A /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				BC7C897F2BE439E0001F303A /* PBXTargetDependency */,
+			);
+			name = HeartTalkTalkAppUITests;
+			productName = HeartTalkTalkAppUITests;
+			productReference = BC7C897D2BE439E0001F303A /* HeartTalkTalkAppUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		BC7C895B2BE439DF001F303A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1530;
+				LastUpgradeCheck = 1530;
+				TargetAttributes = {
+					BC7C89622BE439DF001F303A = {
+						CreatedOnToolsVersion = 15.3;
+					};
+					BC7C89722BE439E0001F303A = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = BC7C89622BE439DF001F303A;
+					};
+					BC7C897C2BE439E0001F303A = {
+						CreatedOnToolsVersion = 15.3;
+						TestTargetID = BC7C89622BE439DF001F303A;
+					};
+				};
+			};
+			buildConfigurationList = BC7C895E2BE439DF001F303A /* Build configuration list for PBXProject "HeartTalkTalkApp" */;
+			compatibilityVersion = "Xcode 14.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = BC7C895A2BE439DF001F303A;
+			productRefGroup = BC7C89642BE439DF001F303A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				BC7C89622BE439DF001F303A /* HeartTalkTalkApp */,
+				BC7C89722BE439E0001F303A /* HeartTalkTalkAppTests */,
+				BC7C897C2BE439E0001F303A /* HeartTalkTalkAppUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		BC7C89612BE439DF001F303A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC7C896E2BE439DF001F303A /* Preview Assets.xcassets in Resources */,
+				BC7C896B2BE439DF001F303A /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC7C89712BE439E0001F303A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC7C897B2BE439E0001F303A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		BC7C895F2BE439DF001F303A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC7C89692BE439DF001F303A /* ContentView.swift in Sources */,
+				BC7C89672BE439DF001F303A /* HeartTalkTalkAppApp.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC7C896F2BE439E0001F303A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC7C89782BE439E0001F303A /* HeartTalkTalkAppTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		BC7C89792BE439E0001F303A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				BC7C89822BE439E0001F303A /* HeartTalkTalkAppUITests.swift in Sources */,
+				BC7C89842BE439E0001F303A /* HeartTalkTalkAppUITestsLaunchTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		BC7C89752BE439E0001F303A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BC7C89622BE439DF001F303A /* HeartTalkTalkApp */;
+			targetProxy = BC7C89742BE439E0001F303A /* PBXContainerItemProxy */;
+		};
+		BC7C897F2BE439E0001F303A /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = BC7C89622BE439DF001F303A /* HeartTalkTalkApp */;
+			targetProxy = BC7C897E2BE439E0001F303A /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		BC7C89852BE439E0001F303A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		BC7C89862BE439E0001F303A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		BC7C89882BE439E0001F303A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"HeartTalkTalkApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 9RMF7574A5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.dev.kyh.HeartTalkTalkApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		BC7C89892BE439E0001F303A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_ASSET_PATHS = "\"HeartTalkTalkApp/Preview Content\"";
+				DEVELOPMENT_TEAM = 9RMF7574A5;
+				ENABLE_PREVIEWS = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
+				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
+				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.dev.kyh.HeartTalkTalkApp;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		BC7C898B2BE439E0001F303A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9RMF7574A5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.dev.kyh.HeartTalkTalkAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HeartTalkTalkApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HeartTalkTalkApp";
+			};
+			name = Debug;
+		};
+		BC7C898C2BE439E0001F303A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9RMF7574A5;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.dev.kyh.HeartTalkTalkAppTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/HeartTalkTalkApp.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/HeartTalkTalkApp";
+			};
+			name = Release;
+		};
+		BC7C898E2BE439E0001F303A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9RMF7574A5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.dev.kyh.HeartTalkTalkAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HeartTalkTalkApp;
+			};
+			name = Debug;
+		};
+		BC7C898F2BE439E0001F303A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 9RMF7574A5;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = kr.dev.kyh.HeartTalkTalkAppUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_TARGET_NAME = HeartTalkTalkApp;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		BC7C895E2BE439DF001F303A /* Build configuration list for PBXProject "HeartTalkTalkApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC7C89852BE439E0001F303A /* Debug */,
+				BC7C89862BE439E0001F303A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC7C89872BE439E0001F303A /* Build configuration list for PBXNativeTarget "HeartTalkTalkApp" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC7C89882BE439E0001F303A /* Debug */,
+				BC7C89892BE439E0001F303A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC7C898A2BE439E0001F303A /* Build configuration list for PBXNativeTarget "HeartTalkTalkAppTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC7C898B2BE439E0001F303A /* Debug */,
+				BC7C898C2BE439E0001F303A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		BC7C898D2BE439E0001F303A /* Build configuration list for PBXNativeTarget "HeartTalkTalkAppUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				BC7C898E2BE439E0001F303A /* Debug */,
+				BC7C898F2BE439E0001F303A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = BC7C895B2BE439DF001F303A /* Project object */;
+}
