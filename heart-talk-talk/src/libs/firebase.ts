@@ -55,6 +55,7 @@ export const FUNCTION_LIST = {
   newChattingCreate: 'NewChattingCreate',
   chattingResponseAdd: 'ChattingResponseAdd',
   initializeCreatedUser: 'InitializeCreatedUser',
+  deleteUserData: 'DeleteUserData',
 } as const;
 
 export const PROMPTS = {
@@ -78,6 +79,11 @@ export const initializeCreatedUser = httpsCallable<
   { uid: string; name: string; image: string | null; createdAt: number },
   { success: boolean; message: string }
 >(functions, FUNCTION_LIST.initializeCreatedUser);
+
+export const deleteUserData = httpsCallable<{ uid: string }, null>(
+  functions,
+  FUNCTION_LIST.deleteUserData,
+);
 
 const provider = new GoogleAuthProvider();
 provider.addScope('profile');

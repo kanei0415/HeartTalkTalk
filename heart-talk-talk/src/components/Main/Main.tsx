@@ -17,6 +17,7 @@ type Props = {
   isNewChatCreatable: boolean;
   newChatStartClicked: () => void;
   result: FireStoreResultsType | null;
+  onDeleteUserClicked: () => void;
 };
 
 const Main = ({
@@ -28,6 +29,7 @@ const Main = ({
   newChatStartClicked,
   onChattingItemClicked,
   result,
+  onDeleteUserClicked,
 }: Props) => {
   return (
     <article className='flex flex-row w-full h-full'>
@@ -92,6 +94,12 @@ const Main = ({
               />
             )}
           </div>
+          <CButtonContainer
+            label='회원탈퇴'
+            onClicked={onDeleteUserClicked}
+            activate
+          />
+          <div style={{ height: 24 }} />
           <CButtonContainer
             label='로그아웃'
             onClicked={onLogoutClicked}

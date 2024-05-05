@@ -5,20 +5,28 @@ import {
   FIRESTORE_COLLECTIONS,
   FireStoreResultsType,
   FireStoreTitlesType,
+  deleteUserData,
   getAllDocDataFromFireStore,
   getDocDataFromFirestore,
   getOnSnapShotCollectionFromFireStore,
   getOnSnapshotFromFirestore,
   newChattingCreateFunction,
 } from '@libs/firebase';
-import { STORAGE_KEYS, getStorageData, setStorageData } from '@libs/webStorage';
+import {
+  STORAGE_KEYS,
+  getStorageData,
+  removeStorageData,
+  setStorageData,
+} from '@libs/webStorage';
 import useRoute from '@hooks/useRoutes';
 import { ROOT_ROUTES } from '@routes/RootNavigation';
 import { getCurrentDayData } from '@libs/date';
+import useBackdrop from '@hooks/store/useBackdrop';
 
 const MainContainer = () => {
   const { user, __flushInfo } = useUser();
-  const { __routeWithRootNavigation } = useRoute();
+  const { __routeWithRootNavigation, __routeWithReset } = useRoute();
+  const { __backdropOn, __backdropOff } = useBackdrop();
 
   const [currentChat, setCurrentChat] = useState(1);
 
@@ -53,6 +61,8 @@ const MainContainer = () => {
   }, [titles]);
 
   const newChatStartClicked = useCallback(async () => {
+    __backdropOn();
+
     if (!user.uid) {
       return;
     }
@@ -65,7 +75,9 @@ const MainContainer = () => {
     if (!result.data.success) {
       console.error(result.data.message);
     }
-  }, [user]);
+
+    __backdropOff();
+  }, [user, __backdropOn, __backdropOff]);
 
   const onLogoutClicked = useCallback(() => {
     __flushInfo();
@@ -86,6 +98,18 @@ const MainContainer = () => {
   const onChattingItemClicked = useCallback((k: number) => {
     setCurrentChat(k);
   }, []);
+
+  const onDeleteUserClicked = useCallback(async () => {
+    __backdropOn();
+
+    await deleteUserData({ uid: user.uid });
+
+    __flushInfo();
+    __routeWithReset();
+    removeStorageData('LOCAL', STORAGE_KEYS.uid);
+
+    __backdropOff();
+  }, [user, __flushInfo, __routeWithReset, __backdropOn, __backdropOff]);
 
   useEffect(() => {
     loadTitles();
@@ -142,6 +166,7 @@ const MainContainer = () => {
       isNewChatCreatable={isNewChatCreatable}
       newChatStartClicked={newChatStartClicked}
       result={result}
+      onDeleteUserClicked={onDeleteUserClicked}
     />
   );
 };

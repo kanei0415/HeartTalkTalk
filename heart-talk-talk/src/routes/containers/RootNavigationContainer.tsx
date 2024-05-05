@@ -8,9 +8,11 @@ import {
   getDocDataFromFirestore,
   getOnSnapshotFromFirestore,
 } from '@libs/firebase';
+import useBackdrop from '@hooks/store/useBackdrop';
 
 const RootNavigationContainer = () => {
   const { user, __updateUserInfo } = useUser();
+  const { backdrop } = useBackdrop();
 
   const loadUserData = useCallback(async () => {
     if (!user.uid) {
@@ -49,7 +51,26 @@ const RootNavigationContainer = () => {
     };
   }, [user, __updateUserInfo]);
 
-  return <RootNavigation />;
+  return (
+    <>
+      {backdrop && (
+        <div
+          style={{
+            backgroundColor: '#00000055',
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            zIndex: 999,
+          }}
+          onClick={(e) => {
+            e.preventDefault();
+          }}
+          className='w-full h-full'
+        />
+      )}
+      <RootNavigation />
+    </>
+  );
 };
 
 export default RootNavigationContainer;
