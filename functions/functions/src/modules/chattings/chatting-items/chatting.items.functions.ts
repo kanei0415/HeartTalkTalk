@@ -1,6 +1,5 @@
 import * as functions from "firebase-functions";
-import * as functionsV2 from "firebase-functions/v2";
-import {CORS_POLICY, FUNCTUONS_REGION} from "../../../config/config";
+import {FUNCTUONS_REGION} from "../../../config/config";
 import resultsService from "../results/results.service";
 import {CHATTING_CALLECTIONS} from "../chatting.interface";
 import {CHATTING_ITEMS_MAKE_RESULT_UNIT, CHATTING_ITEM_COLLECTIONS, FireStoreChattingItemType, FireStoreChattingItemsType} from "./chatting.items.interface";
@@ -123,102 +122,95 @@ export const ChattingItemOnUpdated = functions
     };
   });
 
-export const ChattingResponseAdd = functionsV2.https.onCall(
-  {
-    cors: CORS_POLICY,
-    region: FUNCTUONS_REGION,
-    timeoutSeconds: 120,
-  },
-  async (req) => {
-    const {uid, day} = req.data as {uid: string; day: number};
+export const ChattingResponseAdd = functions.region(FUNCTUONS_REGION).https.onCall(async (req) => {
+  const {uid, day} = req as {uid: string; day: number};
 
-    const chattingItemsDocRef = chattingItemsService.getDocRef(uid, day);
+  const chattingItemsDocRef = chattingItemsService.getDocRef(uid, day);
 
-    const chattingItemsDocData = (await chattingItemsDocRef.get()).data();
+  const chattingItemsDocData = (await chattingItemsDocRef.get()).data();
 
-    if (!chattingItemsDocData) {
-      return {
-        success: false,
-        message: `No Such ChattingItems uid: ${uid} day: ${day}`,
-      };
-    }
-
-    const chattingItems = chattingItemsDocData as FireStoreChattingItemsType;
-
-    const now = new Date();
-
-    const nowDateValue = Number(`${now.getFullYear()}${now.getMonth() + 1}${now.getDate()}`);
-
-    if (nowDateValue !== chattingItems.createdAt) {
-      return {
-        success: false,
-        message: `User Cant Update ChattingItems Date Has Passed uid: ${uid} day: ${day}`,
-      };
-    }
-
-    if (chattingItems.items[chattingItems.items.length - 1].sender === "SYSTEM") {
-      return {
-        success: false,
-        message: `User's Response Messege Not Exist uid: ${uid} day: ${day}`,
-      };
-    }
-
-    const userResponse: FireStoreChattingItemType[] = [];
-
-    while (chattingItems.items.length > 0) {
-      const lastItem = chattingItems.items.pop();
-
-      if (lastItem === undefined) {
-        break;
-      }
-
-      userResponse.push(lastItem);
-
-      if (lastItem.sender === "SYSTEM") {
-        break;
-      }
-    }
-
-    const prevSenderMessage = userResponse.reverse().pop();
-
-    if (!prevSenderMessage) {
-      return {
-        success: false,
-        message: `User's Response Messege Not Exist uid: ${uid} day: ${day}`,
-      };
-    }
-
-    const responseCompletion = await openaiService.getResponseMessage(uid, prevSenderMessage.contents, userResponse.map((item) => item.contents).join("."));
-
-    if (!responseCompletion) {
-      return {
-        success: false,
-        message: "Nothing Has Completed From OpenAI",
-      };
-    }
-
-    const responseMessageContent = responseCompletion.choices[0].message.content;
-
-    if (!responseMessageContent) {
-      return {
-        success: false,
-        message: "No Such Choiced Response Message From OpenAI",
-      };
-    }
-
-    chattingItemsDocRef.set(
-      {
-        items: FieldValue.arrayUnion({
-          sender: "SYSTEM",
-          contents: responseMessageContent,
-        } satisfies FireStoreChattingItemType),
-      },
-      {merge: true},
-    );
-
+  if (!chattingItemsDocData) {
     return {
-      success: true,
-      message: "Add Message From OpenAI Is Successed",
+      success: false,
+      message: `No Such ChattingItems uid: ${uid} day: ${day}`,
     };
-  },
-);
+  }
+
+  const chattingItems = chattingItemsDocData as FireStoreChattingItemsType;
+
+  const now = new Date();
+
+  const nowDateValue = Number(`${now.getFullYear()}${now.getMonth() + 1}${now.getDate()}`);
+
+  if (nowDateValue !== chattingItems.createdAt) {
+    return {
+      success: false,
+      message: `User Cant Update ChattingItems Date Has Passed uid: ${uid} day: ${day}`,
+    };
+  }
+
+  if (chattingItems.items[chattingItems.items.length - 1].sender === "SYSTEM") {
+    return {
+      success: false,
+      message: `User's Response Messege Not Exist uid: ${uid} day: ${day}`,
+    };
+  }
+
+  const userResponse: FireStoreChattingItemType[] = [];
+
+  while (chattingItems.items.length > 0) {
+    const lastItem = chattingItems.items.pop();
+
+    if (lastItem === undefined) {
+      break;
+    }
+
+    userResponse.push(lastItem);
+
+    if (lastItem.sender === "SYSTEM") {
+      break;
+    }
+  }
+
+  const prevSenderMessage = userResponse.reverse().pop();
+
+  if (!prevSenderMessage) {
+    return {
+      success: false,
+      message: `User's Response Messege Not Exist uid: ${uid} day: ${day}`,
+    };
+  }
+
+  const responseCompletion = await openaiService.getResponseMessage(uid, prevSenderMessage.contents, userResponse.map((item) => item.contents).join("."));
+
+  if (!responseCompletion) {
+    return {
+      success: false,
+      message: "Nothing Has Completed From OpenAI",
+    };
+  }
+
+  const responseMessageContent = responseCompletion.choices[0].message.content;
+
+  if (!responseMessageContent) {
+    return {
+      success: false,
+      message: "No Such Choiced Response Message From OpenAI",
+    };
+  }
+
+  chattingItemsDocRef.set(
+    {
+      items: FieldValue.arrayUnion({
+        sender: "SYSTEM",
+        contents: responseMessageContent,
+      } satisfies FireStoreChattingItemType),
+    },
+    {merge: true},
+  );
+
+  return {
+    success: true,
+    message: "Add Message From OpenAI Is Successed",
+  };
+});
