@@ -10,15 +10,16 @@ import {
   googleLogin,
   initializeCreatedUser,
   login,
-  setDocDataToFirestore,
 } from '@libs/firebase';
 import { STORAGE_KEYS, getStorageData, setStorageData } from '@libs/webStorage';
 import useUser from '@hooks/store/useUser';
 import { getCurrentDayData } from '@libs/date';
+import useBackdrop from '@hooks/store/useBackdrop';
 
 const LandingContainer = () => {
   const { __routeWithRootNavigation } = useRoute();
   const { __updateUserInfo } = useUser();
+  const { __backdropOn, __backdropOff } = useBackdrop();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -29,6 +30,7 @@ const LandingContainer = () => {
   );
 
   const checkLoginInfo = useCallback(async () => {
+    __backdropOn();
     const uid = getStorageData('LOCAL', STORAGE_KEYS.uid);
 
     if (uid) {
@@ -43,7 +45,14 @@ const LandingContainer = () => {
         __routeWithRootNavigation(ROOT_ROUTES.MAIN);
       }
     }
-  }, [__updateUserInfo, __routeWithRootNavigation]);
+
+    __backdropOff();
+  }, [
+    __updateUserInfo,
+    __routeWithRootNavigation,
+    __backdropOn,
+    __backdropOff,
+  ]);
 
   const onEmailChanged = useCallback((email: string) => setEmail(email), []);
 
@@ -53,6 +62,8 @@ const LandingContainer = () => {
   );
 
   const onLoginClicked = useCallback(async () => {
+    __backdropOn();
+
     if (!loginBtnActive) {
       alert('계정 정보가 올바르게 입력되지 않았습니다');
       return;
@@ -80,6 +91,8 @@ const LandingContainer = () => {
       }
     } catch (e) {
       console.error(e);
+    } finally {
+      __backdropOff();
     }
   }, [
     loginBtnActive,
@@ -87,10 +100,17 @@ const LandingContainer = () => {
     password,
     __updateUserInfo,
     __routeWithRootNavigation,
+    __backdropOn,
+    __backdropOff,
   ]);
 
   const onGoogleLoginClicked = useCallback(async () => {
-    const [uc] = await googleLogin();
+    __backdropOn();
+    const uc = await googleLogin();
+
+    if (!uc) {
+      return;
+    }
 
     const docData = await getDocDataFromFirestore(
       FIRESTORE_COLLECTIONS.user,
@@ -104,18 +124,6 @@ const LandingContainer = () => {
 
       __routeWithRootNavigation(ROOT_ROUTES.MAIN);
     } else {
-      const userData = {
-        name: uc.user.displayName ?? '새로운 이용자',
-        uid: uc.user.uid,
-        image: uc.user.photoURL,
-        days: 1,
-        createdAt: getCurrentDayData(),
-      } satisfies FireStoreUserType;
-
-      setDocDataToFirestore(FIRESTORE_COLLECTIONS.user, uc.user.uid, userData);
-
-      setStorageData('LOCAL', STORAGE_KEYS.uid, uc.user.uid);
-
       const result = await initializeCreatedUser({
         uid: uc.user.uid,
         name: uc.user.displayName ?? '새로운 이용자',
@@ -138,7 +146,14 @@ const LandingContainer = () => {
 
       alert('구글 계정 생성에 실패했습니다');
     }
-  }, [__updateUserInfo, __routeWithRootNavigation]);
+
+    __backdropOff();
+  }, [
+    __updateUserInfo,
+    __routeWithRootNavigation,
+    __backdropOn,
+    __backdropOff,
+  ]);
 
   const onServeyBtnClicked = useCallback(() => {
     __routeWithRootNavigation(ROOT_ROUTES.SERVEY);

@@ -7,7 +7,7 @@ import {
 } from '@libs/regex';
 
 type Props = {
-  type: 'email' | 'password' | 'name';
+  type: 'email' | 'password' | 'name' | 'text';
   label: string;
   placeholder: string;
   onChange: (v: string) => void;
@@ -20,6 +20,7 @@ type Props = {
     successMsg: string;
   } | null;
   isNeededValue: boolean;
+  defaultValue?: string;
 };
 
 const CInputContainer = ({
@@ -30,6 +31,7 @@ const CInputContainer = ({
   error,
   success,
   isNeededValue,
+  defaultValue,
 }: Props) => {
   const [value, setValue] = useState('');
   const [focused, setFocused] = useState(false);
@@ -136,6 +138,7 @@ const CInputContainer = ({
       focused={focused}
       onFocused={onFocused}
       onBlured={onBlured}
+      defaultValue={defaultValue}
     />
   );
 };

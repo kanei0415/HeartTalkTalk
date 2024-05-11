@@ -1,8 +1,9 @@
-//
-//  DateUtil.swift
-//  HeartTalkTalkApp
-//
-//  Created by 김영호 on 5/5/24.
-//
-
 import Foundation
+
+func getCreatedDate() -> Int {
+    let formatter = DateFormatter()
+    
+    formatter.dateFormat = "yyyyMd"
+    
+    return Int(formatter.string(from: Date.now)) ?? 202457
+}

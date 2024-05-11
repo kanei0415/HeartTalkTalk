@@ -1,8 +1,11 @@
-//
-//  User.swift
-//  HeartTalkTalkApp
-//
-//  Created by 김영호 on 5/4/24.
-//
-
 import Foundation
+import FirebaseFirestore
+
+struct FirestoreUser: Codable {
+    var name: String
+    var uid: String
+    var image: String?
+    var days: Int
+    var createdAt: Int
+    var reservedDays: Int
+}

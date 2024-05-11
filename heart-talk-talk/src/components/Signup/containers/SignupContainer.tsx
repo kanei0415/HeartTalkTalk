@@ -19,6 +19,7 @@ import useUser from '@hooks/store/useUser';
 import { STORAGE_KEYS, setStorageData } from '@libs/webStorage';
 import useRoute from '@hooks/useRoutes';
 import { ROOT_ROUTES } from '@routes/RootNavigation';
+import useBackdrop from '@hooks/store/useBackdrop';
 
 const fr = new FileReader();
 
@@ -31,6 +32,7 @@ const SignupContainer = () => {
   const [password, setPassword] = useState('');
   const [passwordConfirm, setPasswordConfirm] = useState('');
   const [name, setName] = useState('');
+  const { __backdropOff, __backdropOn } = useBackdrop();
 
   const emailVaild = useMemo(() => EMAIL_INPUT_REGEX.test(email), [email]);
 
@@ -83,6 +85,8 @@ const SignupContainer = () => {
   const onNameChanged = useCallback((name: string) => setName(name), []);
 
   const onSignupBtnClicked = useCallback(async () => {
+    __backdropOn();
+
     if (!signupBtnActive) {
       return;
     }
@@ -118,6 +122,8 @@ const SignupContainer = () => {
         __routeWithRootNavigation(ROOT_ROUTES.MAIN);
       }
     }
+
+    __backdropOff();
   }, [
     signupBtnActive,
     email,
@@ -126,6 +132,8 @@ const SignupContainer = () => {
     name,
     __updateUserInfo,
     __routeWithRootNavigation,
+    __backdropOn,
+    __backdropOff,
   ]);
 
   useEffect(() => {

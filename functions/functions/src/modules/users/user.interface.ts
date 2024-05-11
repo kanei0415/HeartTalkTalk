@@ -7,4 +7,5 @@ export interface FireStoreUserType {
   days: number;
   config: string;
   createdAt: number;
+  reservedDays: number;
 }

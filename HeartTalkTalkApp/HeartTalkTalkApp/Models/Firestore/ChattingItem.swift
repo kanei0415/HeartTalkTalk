@@ -1,8 +1,11 @@
-//
-//  ChattingItem.swift
-//  HeartTalkTalkApp
-//
-//  Created by 김영호 on 5/5/24.
-//
-
 import Foundation
+
+struct FirebaseChattingItemMessage: Codable {
+    var contents: String
+    var sender: String
+}
+
+struct FirestoreChattingItem: Codable {
+    var createdAt: Int
+    var items: [FirebaseChattingItemMessage]
+}

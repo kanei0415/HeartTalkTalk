@@ -1,18 +1,32 @@
-//
-//  CButtonComponent.swift
-//  HeartTalkTalkApp
-//
-//  Created by 김영호 on 5/3/24.
-//
-
 import SwiftUI
 
 struct CButtonComponent: View {
+    var active: Bool
+    var buttonLabel: String
+    var onTapGesturedHandler: () -> Void
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack {
+            Button(action: {
+                if self.active {
+                    onTapGesturedHandler()
+                }
+            }, label: {
+                Text(self.buttonLabel)
+                    .font(
+                        Font.getCustomFontStyle(
+                            customFont: .roboto,
+                            fontWeight: .medium,
+                            size: 15
+                        )
+                    )
+                    .foregroundStyle(self.active ? Color.white : Color.customStoneColor)
+            })
+        }
+        .frame(maxWidth: .infinity, minHeight: 48)
+        .clipShape(RoundedRectangle(cornerRadius: 4))
+        .background(self.active ? Color.customBlueColor : Color.customGrayColor)
+        
+    
     }
-}
-
-#Preview {
-    CButtonComponent()
 }

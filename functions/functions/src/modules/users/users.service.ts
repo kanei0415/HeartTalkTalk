@@ -43,6 +43,7 @@ class UserService {
       days: 0,
       config: "",
       createdAt,
+      reservedDays: 5,
     } satisfies FireStoreUserType);
 
     const chattingItemsResult = await chattingItemsService.addNewChatting(uid, 1, createdAt);

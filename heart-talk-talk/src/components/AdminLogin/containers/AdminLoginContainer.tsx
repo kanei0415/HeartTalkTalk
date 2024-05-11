@@ -12,10 +12,12 @@ import useRoute from '@hooks/useRoutes';
 import { ADMIN_ROUTE } from '@routes/components/AdminNavigation';
 import { STORAGE_KEYS, getStorageData, setStorageData } from '@libs/webStorage';
 import useAdmin from '@hooks/store/useAdmin';
+import useBackdrop from '@hooks/store/useBackdrop';
 
 const AdminLoginContainer = () => {
   const { __routeWithAdminNavigation } = useRoute();
   const { __updateAdminInfo } = useAdmin();
+  const { __backdropOff, __backdropOn } = useBackdrop();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -26,7 +28,7 @@ const AdminLoginContainer = () => {
   );
 
   const checkLoginInfo = useCallback(async () => {
-    const uid = getStorageData('LOCAL', STORAGE_KEYS.uid);
+    const uid = getStorageData('LOCAL', STORAGE_KEYS.adminUid);
 
     if (uid) {
       const adminDocData = (await getDocDataFromFirestore(
@@ -55,6 +57,8 @@ const AdminLoginContainer = () => {
   }, []);
 
   const onAdminLoginClicked = useCallback(async () => {
+    __backdropOn();
+
     if (!loginBtnActive) {
       alert('계정 정보가 올바르게 입력되지 않았습니다');
       return;
@@ -86,16 +90,27 @@ const AdminLoginContainer = () => {
     } catch (e) {
       alert('계정이 존재하지 않습니다!');
     }
+
+    __backdropOff();
   }, [
     email,
     password,
     loginBtnActive,
     __routeWithAdminNavigation,
     __updateAdminInfo,
+    __backdropOn,
+    __backdropOff,
   ]);
 
   const onGoogleLoginClicked = useCallback(async () => {
-    const [uc] = await googleLogin();
+    __backdropOn();
+
+    const uc = await googleLogin();
+
+    if (!uc) {
+      alert('존재하지 않는 계정입니다');
+      return;
+    }
 
     const docData = await getDocDataFromFirestore(
       FIRESTORE_COLLECTIONS.admin,
@@ -111,7 +126,14 @@ const AdminLoginContainer = () => {
     } else {
       alert('계정 정보가 없습니다!');
     }
-  }, [__updateAdminInfo, __routeWithAdminNavigation]);
+
+    __backdropOff();
+  }, [
+    __updateAdminInfo,
+    __routeWithAdminNavigation,
+    __backdropOn,
+    __backdropOff,
+  ]);
 
   useEffect(() => {
     checkLoginInfo();

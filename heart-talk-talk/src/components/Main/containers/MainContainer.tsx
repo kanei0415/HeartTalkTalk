@@ -5,20 +5,29 @@ import {
   FIRESTORE_COLLECTIONS,
   FireStoreResultsType,
   FireStoreTitlesType,
+  deleteCurrentUser,
   getAllDocDataFromFireStore,
   getDocDataFromFirestore,
   getOnSnapShotCollectionFromFireStore,
   getOnSnapshotFromFirestore,
   newChattingCreateFunction,
+  userPurchased,
 } from '@libs/firebase';
-import { STORAGE_KEYS, getStorageData, setStorageData } from '@libs/webStorage';
+import {
+  STORAGE_KEYS,
+  getStorageData,
+  removeStorageData,
+  setStorageData,
+} from '@libs/webStorage';
 import useRoute from '@hooks/useRoutes';
 import { ROOT_ROUTES } from '@routes/RootNavigation';
 import { getCurrentDayData } from '@libs/date';
+import useBackdrop from '@hooks/store/useBackdrop';
 
 const MainContainer = () => {
   const { user, __flushInfo } = useUser();
-  const { __routeWithRootNavigation } = useRoute();
+  const { __routeWithRootNavigation, __routeLandingWithReset } = useRoute();
+  const { __backdropOn, __backdropOff } = useBackdrop();
 
   const [currentChat, setCurrentChat] = useState(1);
 
@@ -43,6 +52,10 @@ const MainContainer = () => {
   }, [user, currentChat]);
 
   const isNewChatCreatable = useMemo(() => {
+    if (user.days === user.reservedDays) {
+      return false;
+    }
+
     if (titles.length === 0) {
       return true;
     }
@@ -50,9 +63,11 @@ const MainContainer = () => {
     const last = titles[titles.length - 1];
 
     return last.createdAt !== getCurrentDayData();
-  }, [titles]);
+  }, [user, titles]);
 
   const newChatStartClicked = useCallback(async () => {
+    __backdropOn();
+
     if (!user.uid) {
       return;
     }
@@ -65,7 +80,36 @@ const MainContainer = () => {
     if (!result.data.success) {
       console.error(result.data.message);
     }
-  }, [user]);
+
+    __backdropOff();
+  }, [user, __backdropOn, __backdropOff]);
+
+  const onPaymentClicked = useCallback(() => {
+    __backdropOn();
+
+    window.IMP.request_pay(
+      {
+        pg: 'kakaopay',
+        pay_method: 'card',
+        merchant_uid: `IMP_PRODUCT_30_DAYS ${user.uid} ${getCurrentDayData()}`,
+        amount: 9900,
+        name: '마음톡톡 30일 상담 예약',
+        buyer_name: user.name,
+        buyer_email: user.uid,
+      },
+      (res) => {
+        if (res.success) {
+          userPurchased({ uid: user.uid }).then((_) => {
+            alert('상품을 구매해주셔서 감사합니다');
+            __backdropOff();
+          });
+        } else {
+          alert('상담 예약일 구매에 실패했습니다!');
+          __backdropOff();
+        }
+      },
+    );
+  }, [user, __backdropOn, __backdropOff]);
 
   const onLogoutClicked = useCallback(() => {
     __flushInfo();
@@ -86,6 +130,18 @@ const MainContainer = () => {
   const onChattingItemClicked = useCallback((k: number) => {
     setCurrentChat(k);
   }, []);
+
+  const onDeleteUserClicked = useCallback(async () => {
+    __backdropOn();
+
+    await deleteCurrentUser();
+
+    __flushInfo();
+    __routeLandingWithReset();
+    removeStorageData('LOCAL', STORAGE_KEYS.uid);
+
+    __backdropOff();
+  }, [__flushInfo, __routeLandingWithReset, __backdropOn, __backdropOff]);
 
   useEffect(() => {
     loadTitles();
@@ -142,6 +198,8 @@ const MainContainer = () => {
       isNewChatCreatable={isNewChatCreatable}
       newChatStartClicked={newChatStartClicked}
       result={result}
+      onDeleteUserClicked={onDeleteUserClicked}
+      onPaymentClicked={onPaymentClicked}
     />
   );
 };

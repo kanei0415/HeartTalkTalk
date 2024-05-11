@@ -8,6 +8,7 @@ const FILE_TREE = {
   main: '/assets/main',
   common: {
     cinput: '/assets/common/cinput',
+    ccheck: '/assets/common/ccheck',
   },
 } as const;
 
@@ -27,6 +28,10 @@ const images = {
     cinput: {
       email: `${FILE_TREE.common.cinput}/ic-input-email.${FILE_EXT.image}`,
       password: `${FILE_TREE.common.cinput}/ic-input-password.${FILE_EXT.image}`,
+    },
+    ccheck: {
+      empty: `${FILE_TREE.common.ccheck}/ic-select-empty.${FILE_EXT.image}`,
+      fill: `${FILE_TREE.common.ccheck}/ic-select-fill.${FILE_EXT.image}`,
     },
   },
   signup: {

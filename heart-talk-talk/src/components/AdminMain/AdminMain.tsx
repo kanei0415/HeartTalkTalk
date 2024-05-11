@@ -1,30 +1,50 @@
 import images from '@assets/images';
 import CButtonContainer from '@components/common/CButton/containers/CButtonContainer';
-import { FireStoreAdminType } from '@libs/firebase';
+import CInputContainer from '@components/common/CInput/containers/CInputContainer';
+import {
+  FireStoreAdminType,
+  FireStorePromptType,
+  FireStoreServeyItemType,
+  PROMPTS,
+} from '@libs/firebase';
 import React from 'react';
+
+const tabs = Object.values(PROMPTS);
 
 type Props = {
   admin: FireStoreAdminType;
-  tabs: string[];
-  currentTab: string | null;
-  prompt: string;
-  onTabClicked: (tab: string) => void;
+  currentTab: number;
+  prompts: FireStorePromptType[];
+  onTabClicked: (tab: number) => void;
   onPromptChanged: (newValue: string) => void;
   onLogoutClicked: () => void;
   onUpdateBtnActivate: boolean;
   onUpdateBtnClicked: () => void;
+  serveySelected: boolean;
+  onSelectTabClicked: () => void;
+  serveyItems: FireStoreServeyItemType[];
+  onServeyItemChanged: (index: number, value: string) => void;
+  onServeyItemAddBtnClicked: () => void;
+  onServeyItemUpdateClicked: (index: number) => void;
+  serveyItemsUpdateBtnActiveList: boolean[];
 };
 
 const AdminMain = ({
   admin,
-  tabs,
   currentTab,
-  prompt,
+  prompts,
   onTabClicked,
   onPromptChanged,
   onLogoutClicked,
   onUpdateBtnActivate,
   onUpdateBtnClicked,
+  serveySelected,
+  onSelectTabClicked,
+  serveyItems,
+  onServeyItemChanged,
+  onServeyItemAddBtnClicked,
+  onServeyItemUpdateClicked,
+  serveyItemsUpdateBtnActiveList,
 }: Props) => {
   return (
     <article className='flex flex-row w-full h-full p-4'>
@@ -50,17 +70,29 @@ const AdminMain = ({
         <div style={{ height: 24 }} className='flex-1'>
           {tabs.map((tab, i) => (
             <button
-              onClick={() => onTabClicked(tab)}
+              onClick={() => onTabClicked(i)}
               key={i}
               style={{ height: 48, marginBottom: 16, width: 360 }}
               className={`flex flex-row items-center p-4 border rounded border-blue ${
-                currentTab === tab && 'bg-blue bg-opacity-50'
+                currentTab === i && 'bg-blue bg-opacity-50'
               }`}>
               <span className='text-base font-regular text-black'>{tab}</span>
               <div className='flex-1'></div>
               <img src={images.main.chattingArrow} alt='chatting btn' />
             </button>
           ))}
+          <button
+            onClick={onSelectTabClicked}
+            style={{ height: 48, marginBottom: 16, width: 360 }}
+            className={`flex flex-row items-center p-4 border rounded border-blue ${
+              serveySelected && 'bg-blue bg-opacity-50'
+            }`}>
+            <span className='text-base font-regular text-black'>
+              {'설문조사 문항'}
+            </span>
+            <div className='flex-1'></div>
+            <img src={images.main.chattingArrow} alt='chatting btn' />
+          </button>
         </div>
         <CButtonContainer
           label='로그아웃'
@@ -68,26 +100,64 @@ const AdminMain = ({
           activate
         />
       </section>
-      {currentTab && (
+      {!serveySelected && currentTab >= 0 && (
         <section className='flex-1 flex-col justify-center items-stretch p-8'>
-          <h1 className='text-center'>{currentTab}</h1>
+          <h1 className='text-center'>{tabs[currentTab]}</h1>
           <div style={{ height: 24 }}></div>
-          <textarea
-            key={currentTab}
-            style={{
-              overflow: 'hidden',
-              resize: 'none',
-            }}
-            rows={20}
-            className='p-4 bg-zinc border border-black text-black font-bold text-xl w-full'
-            onChange={(e) => onPromptChanged(e.target.value)}
-            defaultValue={prompt}
-          />
+          {prompts.length > 0 && (
+            <textarea
+              key={currentTab}
+              style={{
+                overflow: 'hidden',
+                resize: 'none',
+              }}
+              rows={20}
+              className='p-4 bg-zinc border border-black text-black font-bold text-xl w-full'
+              onChange={(e) => onPromptChanged(e.target.value)}
+              defaultValue={prompts[currentTab].contents}
+            />
+          )}
           <div style={{ height: 24 }}></div>
           <CButtonContainer
             onClicked={onUpdateBtnClicked}
             label='프롬프트 변경'
             activate={onUpdateBtnActivate}
+          />
+        </section>
+      )}
+      {serveySelected && (
+        <section className='flex-1 flex-col justify-center items-stretch p-8 overflow-y-scroll'>
+          <h1 className='text-center'>{'설문조사 문항'}</h1>
+          <div style={{ height: 24 }}></div>
+          {serveyItems.map((item, index) => {
+            return (
+              <div className='flex flex-row items-center'>
+                <CInputContainer
+                  type='text'
+                  label={`${index + 1}`}
+                  defaultValue={item.label}
+                  onChange={(v) => {
+                    onServeyItemChanged(index, v);
+                  }}
+                  isNeededValue
+                  placeholder='문항 내용을 입력해주세요'
+                  error={null}
+                  success={null}
+                />
+                <div style={{ width: 200, marginLeft: 24 }}>
+                  <CButtonContainer
+                    label='문항 수정'
+                    onClicked={() => onServeyItemUpdateClicked(index)}
+                    activate={serveyItemsUpdateBtnActiveList[index]}
+                  />
+                </div>
+              </div>
+            );
+          })}
+          <CButtonContainer
+            onClicked={onServeyItemAddBtnClicked}
+            label='설문지 문항 추가'
+            activate
           />
         </section>
       )}

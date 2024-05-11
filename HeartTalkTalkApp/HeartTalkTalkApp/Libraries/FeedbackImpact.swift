@@ -1,8 +1,21 @@
-//
-//  FeedbackImpact.swift
-//  HeartTalkTalkApp
-//
-//  Created by 김영호 on 5/4/24.
-//
-
 import Foundation
+import SwiftUI
+
+struct FeedbackImpact {
+    enum HapticFeedback {
+        case weak
+        case strong
+        
+        var feedback: UIImpactFeedbackGenerator {
+            switch(self) {
+            case .weak: return UIImpactFeedbackGenerator(style: .soft)
+            case .strong: return UIImpactFeedbackGenerator(style: .rigid)
+            }
+        }
+        
+        func react() {
+            self.feedback.prepare()
+            self.feedback.impactOccurred()
+        }
+    }
+}

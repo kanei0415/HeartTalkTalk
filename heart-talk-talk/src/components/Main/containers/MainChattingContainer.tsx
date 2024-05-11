@@ -16,6 +16,7 @@ import {
   getOnSnapshotFromFirestore,
 } from '@libs/firebase';
 import { getCurrentDayData } from '@libs/date';
+import useBackdrop from '@hooks/store/useBackdrop';
 
 type Props = {
   k: number;
@@ -23,6 +24,7 @@ type Props = {
 
 const MainChattingContainer = ({ k }: Props) => {
   const { user } = useUser();
+  const { __backdropOn, __backdropOff } = useBackdrop();
 
   const [chattingItems, setChattingItems] =
     useState<FireStoreChattingItemsType>({
@@ -48,13 +50,24 @@ const MainChattingContainer = ({ k }: Props) => {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  const onResponseMessageAddBtnClicked = useCallback(() => {
+  const onResponseMessageAddBtnClicked = useCallback(async () => {
+    __backdropOn();
+
     if (!user) {
       return;
     }
 
-    chattingResponseAdd({ uid: user.uid, day: k });
-  }, [user, k]);
+    const response = await chattingResponseAdd({
+      uid: user.uid,
+      day: k,
+    });
+
+    if (!response.data.success) {
+      console.error(response.data.message);
+    }
+
+    __backdropOff();
+  }, [user, k, __backdropOn, __backdropOff]);
 
   const loadChatting = useCallback(async () => {
     if (!user.uid) {
@@ -76,6 +89,8 @@ const MainChattingContainer = ({ k }: Props) => {
   }, []);
 
   const onSendClicked = useCallback(async () => {
+    __backdropOn();
+
     await addChattingItem(user.uid, k, [
       ...chattingItems.items,
       {
@@ -88,7 +103,9 @@ const MainChattingContainer = ({ k }: Props) => {
     if (inputRef?.current) {
       inputRef.current.value = '';
     }
-  }, [input, chattingItems, inputRef, user, k]);
+
+    __backdropOff();
+  }, [input, chattingItems, inputRef, user, k, __backdropOn, __backdropOff]);
 
   useEffect(() => {
     loadChatting();
