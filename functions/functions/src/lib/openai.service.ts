@@ -5,6 +5,8 @@ import promptsService from "../modules/chattings/prompts/prompts.service";
 import {DEFAULT_PROMPTS, FireStorePromptType, PROMPTS} from "../modules/chattings/prompts/prompts.interface";
 import {FireStoreChattingItemType} from "../modules/chattings/chatting-items/chatting.items.interface";
 
+const NODE_ENV = "DEV";
+
 class OpenAIService {
   client = new OpenAI({apiKey: config().openai.apikey});
 

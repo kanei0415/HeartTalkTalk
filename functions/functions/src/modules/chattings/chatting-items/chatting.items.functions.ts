@@ -138,17 +138,6 @@ export const ChattingResponseAdd = functions.region(FUNCTUONS_REGION).https.onCa
 
   const chattingItems = chattingItemsDocData as FireStoreChattingItemsType;
 
-  const now = new Date();
-
-  const nowDateValue = Number(`${now.getFullYear()}${now.getMonth() + 1}${now.getDate()}`);
-
-  if (nowDateValue !== chattingItems.createdAt) {
-    return {
-      success: false,
-      message: `User Cant Update ChattingItems Date Has Passed uid: ${uid} day: ${day}`,
-    };
-  }
-
   if (chattingItems.items[chattingItems.items.length - 1].sender === "SYSTEM") {
     return {
       success: false,

@@ -1,8 +1,14 @@
-//
-//  ImageExtension.swift
-//  HeartTalkTalkApp
-//
-//  Created by 김영호 on 5/3/24.
-//
-
 import Foundation
+import SwiftUI
+
+extension Image {
+    enum Icon: String {
+        case email = "icEmail"
+        case password = "icPassword"
+        case typo = "icTypo"
+        case logo = "icLogo"
+        case google = "icGoogle"
+        case sender = "icSender"
+        case send = "icSend"
+    }
+}

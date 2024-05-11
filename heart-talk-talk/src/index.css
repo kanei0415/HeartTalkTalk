@@ -10,11 +10,11 @@ input {
   outline: none;
 }
 
-div.chatting-container::-webkit-scrollbar {
+*::-webkit-scrollbar {
   display: none;
 }
 
-div.chatting-container {
+* {
   -ms-overflow-style: none;
   scrollbar-width: none;
 }

@@ -18,6 +18,7 @@ type Props = {
   newChatStartClicked: () => void;
   result: FireStoreResultsType | null;
   onDeleteUserClicked: () => void;
+  onPaymentClicked: () => void;
 };
 
 const Main = ({
@@ -30,6 +31,7 @@ const Main = ({
   onChattingItemClicked,
   result,
   onDeleteUserClicked,
+  onPaymentClicked,
 }: Props) => {
   return (
     <article className='flex flex-row w-full h-full'>
@@ -64,11 +66,20 @@ const Main = ({
             <span className='text-black font-bold text-xl'>{`${user.name}`}</span>
             <div className='flex-1'></div>
             <span className='text-black font-bold text-base'>
-              <span className='text-2xl text-pink'>{user.days} </span>
+              <span className='text-2xl text-pink'>
+                {user.days}
+                <span className='text-sm text-black'>{` / ${user.reservedDays} `}</span>
+              </span>
               {'일째 상담중'}
             </span>
           </div>
         </div>
+        <div style={{ height: 24 }} />
+        <CButtonContainer
+          label='결제하기'
+          onClicked={onPaymentClicked}
+          activate
+        />
         <div className='flex-1 flex flex-col'>
           <div style={{ marginTop: 24 }} className='flex-1 flex flex-col'>
             {titles.map((t, i) => (

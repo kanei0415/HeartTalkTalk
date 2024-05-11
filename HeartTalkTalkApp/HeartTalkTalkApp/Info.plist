@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleURLTypes</key>
+	<array>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.384695714039-19a9fnqboctt57r436jiqe7bkuirbnob</string>
+			</array>
+		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>kr.dev.kyh.HeartTalkTalkApp</string>
+			</array>
+		</dict>
+	</array>
+	<key>GIDClientID</key>
+	<string>384695714039-19a9fnqboctt57r436jiqe7bkuirbnob.apps.googleusercontent.com</string>
+	<key>LSApplication</key>
+	<array/>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaotalk</string>
+	</array>
+	<key>NSAppTransportSecurity</key>
+	<dict>
+		<key>NSAllowsArbitraryLoads</key>
+		<true/>
+		<key>NSAllowsArbitraryLoadsInWebContent</key>
+		<true/>
+	</dict>
+	<key>UIAppFonts</key>
+	<array>
+		<string>Pretendard-Black</string>
+		<string>Pretendard-Bold</string>
+		<string>Pretendard-ExtraBold</string>
+		<string>Pretendard-ExtraLight</string>
+		<string>Pretendard-Light</string>
+		<string>Pretendard-Medium</string>
+		<string>Pretendard-Regular</string>
+		<string>Pretendard-SemiBold</string>
+		<string>Pretendard-Thin</string>
+		<string>Roboto-Black</string>
+		<string>Roboto-Bold</string>
+		<string>Roboto-Light</string>
+		<string>Roboto-Medium</string>
+		<string>Roboto-Regular</string>
+		<string>Roboto-Thin</string>
+	</array>
+</dict>
+</plist>

@@ -10,7 +10,6 @@ import {
   googleLogin,
   initializeCreatedUser,
   login,
-  setDocDataToFirestore,
 } from '@libs/firebase';
 import { STORAGE_KEYS, getStorageData, setStorageData } from '@libs/webStorage';
 import useUser from '@hooks/store/useUser';
@@ -107,7 +106,11 @@ const LandingContainer = () => {
 
   const onGoogleLoginClicked = useCallback(async () => {
     __backdropOn();
-    const [uc] = await googleLogin();
+    const uc = await googleLogin();
+
+    if (!uc) {
+      return;
+    }
 
     const docData = await getDocDataFromFirestore(
       FIRESTORE_COLLECTIONS.user,
@@ -121,18 +124,6 @@ const LandingContainer = () => {
 
       __routeWithRootNavigation(ROOT_ROUTES.MAIN);
     } else {
-      const userData = {
-        name: uc.user.displayName ?? '새로운 이용자',
-        uid: uc.user.uid,
-        image: uc.user.photoURL,
-        days: 1,
-        createdAt: getCurrentDayData(),
-      } satisfies FireStoreUserType;
-
-      setDocDataToFirestore(FIRESTORE_COLLECTIONS.user, uc.user.uid, userData);
-
-      setStorageData('LOCAL', STORAGE_KEYS.uid, uc.user.uid);
-
       const result = await initializeCreatedUser({
         uid: uc.user.uid,
         name: uc.user.displayName ?? '새로운 이용자',

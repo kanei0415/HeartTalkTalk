@@ -1,8 +1,9 @@
-//
-//  ViewExtension.swift
-//  HeartTalkTalkApp
-//
-//  Created by 김영호 on 5/4/24.
-//
+import SwiftUI
+import GoogleSignIn
 
-import Foundation
+extension View {
+    func rootViewController() -> UIViewController? {
+        let windowScene =  UIApplication.shared.connectedScenes.first as? UIWindowScene
+        return windowScene?.windows.first?.rootViewController
+    }
+}

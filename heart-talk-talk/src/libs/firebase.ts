@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
   signInWithPopup,
+  deleteUser,
 } from 'firebase/auth';
 import {
   DocumentData,
@@ -55,7 +56,7 @@ export const FUNCTION_LIST = {
   newChattingCreate: 'NewChattingCreate',
   chattingResponseAdd: 'ChattingResponseAdd',
   initializeCreatedUser: 'InitializeCreatedUser',
-  deleteUserData: 'DeleteUserData',
+  userPurchased: 'UserPurchased',
 } as const;
 
 export const PROMPTS = {
@@ -80,9 +81,9 @@ export const initializeCreatedUser = httpsCallable<
   { success: boolean; message: string }
 >(functions, FUNCTION_LIST.initializeCreatedUser);
 
-export const deleteUserData = httpsCallable<{ uid: string }, null>(
+export const userPurchased = httpsCallable<{ uid: string }, null>(
   functions,
-  FUNCTION_LIST.deleteUserData,
+  FUNCTION_LIST.userPurchased,
 );
 
 const provider = new GoogleAuthProvider();
@@ -97,10 +98,14 @@ export function signup(email: string, password: string) {
   return createUserWithEmailAndPassword(auth, email, password);
 }
 
+export function deleteCurrentUser() {
+  return auth.currentUser ? deleteUser(auth.currentUser) : null;
+}
+
 export async function googleLogin() {
-  const result = await signInWithPopup(auth, provider);
-  const credential = GoogleAuthProvider.credentialFromResult(result);
-  return [result, credential] as const;
+  const uc = await signInWithPopup(auth, provider);
+  GoogleAuthProvider.credentialFromResult(uc);
+  return uc;
 }
 
 export const FIRESTORE_COLLECTIONS = {
@@ -127,6 +132,7 @@ export type FireStoreUserType = {
   uid: string;
   image: string | null;
   days: number;
+  reservedDays: number;
   createdAt: number;
 };
 
@@ -149,6 +155,10 @@ export type FireStoreTitlesType = {
   createdAt: number;
 };
 
+export type FireStoreServeyItemType = {
+  label: string;
+};
+
 export type FireStoreChattingItemType = {
   contents: string;
   sender: 'SYSTEM' | 'USER';
@@ -162,7 +172,7 @@ export async function getDocDataFromFirestore(
 
   const docSnapshot = await getDoc(docRef);
 
-  return { ...docSnapshot.data() };
+  return docSnapshot.data();
 }
 
 export function getDocRefFromFirestore(collection: string, path: string) {

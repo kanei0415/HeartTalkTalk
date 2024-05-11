@@ -57,7 +57,14 @@ const MainChattingContainer = ({ k }: Props) => {
       return;
     }
 
-    await chattingResponseAdd({ uid: user.uid, day: k });
+    const response = await chattingResponseAdd({
+      uid: user.uid,
+      day: k,
+    });
+
+    if (!response.data.success) {
+      console.error(response.data.message);
+    }
 
     __backdropOff();
   }, [user, k, __backdropOn, __backdropOff]);

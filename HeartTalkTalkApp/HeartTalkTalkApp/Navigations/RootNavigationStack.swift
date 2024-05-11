@@ -1,18 +1,60 @@
-//
-//  RootNavigationStack.swift
-//  HeartTalkTalkApp
-//
-//  Created by 김영호 on 5/4/24.
-//
-
 import SwiftUI
+import SwiftData
+import Foundation
 
 struct RootNavigationStack: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+    enum StackScreen: String {
+        case landing = "LandingScreen"
+        case signup = "SignupScreen"
+        case main = "MainScreen"
     }
-}
-
-#Preview {
-    RootNavigationStack()
+    
+    @EnvironmentObject var rootState: RootEnvironmentObject
+    
+    @Query var loginInfos: [LoginInfo]
+    
+    @Environment(\.modelContext) private var context
+    
+    func loadUserData(uid: String) {
+        let docRef = FirestoreUtil.single.getDocRef(
+            resolvedCollectionPath: FirestoreUtil.single.getCollectionPathResolver(collection: .users)([:]),
+            documentID: uid
+        )
+        
+        docRef.addSnapshotListener { ds, e in
+            if let docData = try? ds?.data(as: FirestoreUser.self) {
+                self.rootState.user = docData
+                
+                withAnimation {
+                    if let first = self.loginInfos.first {
+                        self.context.delete(first)
+                        self.context.insert(LoginInfo(uid: docData.uid))
+                    } else {
+                        self.context.insert(LoginInfo(uid: docData.uid))
+                    }
+                }
+            }
+        }
+        
+        self.rootState.path.append(StackScreen.main.rawValue)
+    }
+    
+    var body: some View {
+        NavigationStack(path: $rootState.path) {
+            if self.rootState.user == nil {
+                LandingScreen()
+            } else {
+                MainScreen()
+            }
+        }
+        .sheet(isPresented: self.$rootState.iamportViewVisible) {
+            IamportView()
+                .ignoresSafeArea()
+        }
+        .onAppear {
+            if let uid = self.loginInfos.first?.uid {
+                self.loadUserData(uid: uid)
+            }
+        }
+    }
 }

@@ -20,6 +20,10 @@ export default function useRoute() {
     [navigate],
   );
 
+  const __routeLandingWithReset = useCallback(() => {
+    navigate(ROOT_ROUTES.LANDING, { replace: true });
+  }, [navigate]);
+
   const __routeWithReset = useCallback(() => {
     navigate('/admin' + ADMIN_ROUTE.LOGIN, {
       replace: true,
@@ -33,5 +37,6 @@ export default function useRoute() {
     __routeWithRootNavigation,
     __routeWithReset,
     __back,
+    __routeLandingWithReset,
   };
 }

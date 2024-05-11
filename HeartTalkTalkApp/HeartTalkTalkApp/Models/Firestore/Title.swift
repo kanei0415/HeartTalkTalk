@@ -1,8 +1,6 @@
-//
-//  Title.swift
-//  HeartTalkTalkApp
-//
-//  Created by 김영호 on 5/5/24.
-//
-
 import Foundation
+
+struct FirestoreTitle: Codable {
+    var createdAt: Int
+    var label: String
+}

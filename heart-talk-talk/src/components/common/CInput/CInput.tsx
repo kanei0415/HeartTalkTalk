@@ -2,7 +2,7 @@ import React from 'react';
 import images from '@assets/images';
 
 type Props = {
-  type: 'email' | 'password' | 'name';
+  type: 'email' | 'password' | 'name' | 'text';
   label: string;
   placeholder: string;
   onChange: (v: string) => void;
@@ -15,6 +15,7 @@ type Props = {
   focused: boolean;
   onFocused: () => void;
   onBlured: () => void;
+  defaultValue?: string;
 };
 
 const CInput = ({
@@ -28,6 +29,7 @@ const CInput = ({
   focused,
   onFocused,
   onBlured,
+  defaultValue,
 }: Props) => {
   return (
     <div className='flex flex-col w-full'>
@@ -66,6 +68,7 @@ const CInput = ({
             className={`text-base text-black flex-1`}
             type={type}
             onChange={(e) => onChange(e.target.value)}
+            defaultValue={defaultValue}
           />
         </div>
       </label>
