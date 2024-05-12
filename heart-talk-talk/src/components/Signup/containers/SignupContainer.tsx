@@ -9,6 +9,7 @@ import {
   FIRESTORE_COLLECTIONS,
   FireStoreUserType,
   getDocDataFromFirestore,
+  googleLogin,
   initializeCreatedUser,
   login,
   signup,
@@ -16,7 +17,7 @@ import {
 } from '@libs/firebase';
 import { getCurrentDayData } from '@libs/date';
 import useUser from '@hooks/store/useUser';
-import { STORAGE_KEYS, setStorageData } from '@libs/webStorage';
+import { STORAGE_KEYS, getStorageData, setStorageData } from '@libs/webStorage';
 import useRoute from '@hooks/useRoutes';
 import { ROOT_ROUTES } from '@routes/RootNavigation';
 import useBackdrop from '@hooks/store/useBackdrop';
@@ -66,6 +67,60 @@ const SignupContainer = () => {
     return null;
   }, [password, passwordConfirm]);
 
+  const onGoogleLoginClicked = useCallback(async () => {
+    __backdropOn();
+    const uc = await googleLogin();
+
+    if (!uc) {
+      return;
+    }
+
+    const docData = await getDocDataFromFirestore(
+      FIRESTORE_COLLECTIONS.user,
+      uc.user.uid,
+    );
+
+    if (docData) {
+      setStorageData('LOCAL', STORAGE_KEYS.uid, uc.user.uid);
+
+      __updateUserInfo(docData as FireStoreUserType);
+
+      __routeWithRootNavigation(ROOT_ROUTES.MAIN);
+    } else {
+      const prev = getStorageData('LOCAL', STORAGE_KEYS.serveyId);
+
+      const result = await initializeCreatedUser({
+        uid: uc.user.uid,
+        name: uc.user.displayName ?? '새로운 이용자',
+        image: uc.user.photoURL,
+        createdAt: getCurrentDayData(),
+        id: prev || undefined,
+      });
+
+      if (result.data.success) {
+        const userData = (await getDocDataFromFirestore(
+          FIRESTORE_COLLECTIONS.user,
+          uc.user.uid,
+        )) as FireStoreUserType;
+
+        alert(`환영합니다 ${uc.user.displayName ?? '새로운 이용자'} 님`);
+        setStorageData('LOCAL', STORAGE_KEYS.uid, uc.user.uid);
+        __updateUserInfo(userData);
+        __routeWithRootNavigation(ROOT_ROUTES.MAIN);
+        return;
+      }
+
+      alert('구글 계정 생성에 실패했습니다');
+    }
+
+    __backdropOff();
+  }, [
+    __updateUserInfo,
+    __routeWithRootNavigation,
+    __backdropOn,
+    __backdropOff,
+  ]);
+
   const onImageSelected = useCallback((file: File) => {
     setImage(file);
   }, []);
@@ -100,13 +155,16 @@ const SignupContainer = () => {
 
     await login(email, password);
 
-    const downloadUrl = await uploadFileToStorage(name, image);
+    const downloadUrl = await uploadFileToStorage(uc.user.uid, image);
+
+    const prev = getStorageData('LOCAL', STORAGE_KEYS.serveyId);
 
     const result = await initializeCreatedUser({
       uid: uc.user.uid,
       name,
       image: downloadUrl || '',
       createdAt: getCurrentDayData(),
+      id: prev || undefined,
     });
 
     if (result.data.success) {
@@ -163,6 +221,7 @@ const SignupContainer = () => {
       onPasswordConfirmChanged={onPasswordConfirmChanged}
       onNameChanged={onNameChanged}
       onSignupBtnClicked={onSignupBtnClicked}
+      onGoogleLoginClicked={onGoogleLoginClicked}
     />
   );
 };
