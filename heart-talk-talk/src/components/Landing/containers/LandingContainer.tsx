@@ -124,11 +124,14 @@ const LandingContainer = () => {
 
       __routeWithRootNavigation(ROOT_ROUTES.MAIN);
     } else {
+      const prev = getStorageData('LOCAL', STORAGE_KEYS.serveyId);
+
       const result = await initializeCreatedUser({
         uid: uc.user.uid,
         name: uc.user.displayName ?? '새로운 이용자',
         image: uc.user.photoURL,
         createdAt: getCurrentDayData(),
+        id: prev || undefined,
       });
 
       if (result.data.success) {

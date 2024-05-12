@@ -16,6 +16,7 @@ type Props = {
   onPasswordConfirmChanged: (passwordConfirm: string) => void;
   onNameChanged: (name: string) => void;
   onSignupBtnClicked: () => void;
+  onGoogleLoginClicked: () => void;
 };
 
 const Signup = ({
@@ -28,6 +29,7 @@ const Signup = ({
   onPasswordConfirmChanged,
   onNameChanged,
   onSignupBtnClicked,
+  onGoogleLoginClicked,
 }: Props) => {
   return (
     <>
@@ -122,6 +124,18 @@ const Signup = ({
             onClicked={onSignupBtnClicked}
             activate={signupBtnActive}
           />
+          <div style={{ height: 48 }} />
+          <button
+            style={{ height: 48, borderRadius: 24 }}
+            onClick={onGoogleLoginClicked}
+            className='w-full flex flex-row items-center p-4 bg-stone text-base font-regular text-white justify-center'>
+            <img
+              style={{ marginRight: 8 }}
+              src={images.landing.google}
+              alt='google login'
+            />
+            {'구글 계정으로 회원가입 하기'}
+          </button>
         </section>
       </article>
     </>

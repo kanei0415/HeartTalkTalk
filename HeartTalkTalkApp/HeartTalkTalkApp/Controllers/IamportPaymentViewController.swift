@@ -41,13 +41,15 @@ class IamportPaymentViewController: UIViewController {
             return;
         }
         
-        requestIamportPayment(userName: user.name, uid: user.uid, callback: { _ in
-            FunctionsUtil.single.userPurchased(uid: user.uid) { res, err in
-                if let resData = res?.data as? ResponseData {
+        requestIamportPayment(userName: user.name, uid: user.uid, callback: { paymentRes in
+            if paymentRes != nil {
+                FunctionsUtil.single.userPurchased(uid: user.uid) { res, err in
+                    if let resData = res?.data as? ResponseData {
+                        
+                    }
                     
+                    self.rootState?.iamportViewVisible = false
                 }
-                
-                self.rootState?.iamportViewVisible = false
             }
         })
     }

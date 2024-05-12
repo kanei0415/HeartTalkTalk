@@ -7,18 +7,18 @@ import {UserRecord} from "firebase-admin/auth";
 import * as admin from "firebase-admin";
 
 export const InitializeCreatedUser = functions.region(FUNCTUONS_REGION).https.onCall(async (data) => {
-  const {uid, name, image, createdAt} = data as {uid: string; name: string; image: string; createdAt: number};
+  const {uid, name, image, createdAt, id} = data as {uid: string; name: string; image: string; createdAt: number; id?: string};
 
-  return usersService.addUser(uid, name, image, createdAt);
+  return usersService.addUser(uid, name, image, createdAt, id);
 });
 
 export const DeleteUserData = functions
   .region(FUNCTUONS_REGION)
   .auth.user()
   .onDelete(async (user: UserRecord) => {
-    const {uid, displayName} = user;
+    const {uid} = user;
 
-    admin.storage().bucket().file(`image/${displayName}`).delete();
+    admin.storage().bucket().file(`image/${uid}`).delete();
 
     await usersService.getDocRefById(uid).delete();
 

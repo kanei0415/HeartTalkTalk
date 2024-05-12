@@ -57,13 +57,7 @@ export const FUNCTION_LIST = {
   chattingResponseAdd: 'ChattingResponseAdd',
   initializeCreatedUser: 'InitializeCreatedUser',
   userPurchased: 'UserPurchased',
-} as const;
-
-export const PROMPTS = {
-  counselStartMessagePrompt: 'COUNSEL_START_MESSAGE_PROMPT',
-  resultMessagePrompt: 'RESULT_MESSAGE_PROMPT',
-  titleMessagePrompt: 'TITLE_MESSAGE_PROMPT',
-  responseMessagePrompt: 'RESPONSE_MESSAGE_PROMPT',
+  addServeyResult: 'AddServeyResult',
 } as const;
 
 export const newChattingCreateFunction = httpsCallable<
@@ -77,7 +71,13 @@ export const chattingResponseAdd = httpsCallable<
 >(functions, FUNCTION_LIST.chattingResponseAdd);
 
 export const initializeCreatedUser = httpsCallable<
-  { uid: string; name: string; image: string | null; createdAt: number },
+  {
+    uid: string;
+    name: string;
+    image: string | null;
+    createdAt: number;
+    id?: string;
+  },
   { success: boolean; message: string }
 >(functions, FUNCTION_LIST.initializeCreatedUser);
 
@@ -85,6 +85,11 @@ export const userPurchased = httpsCallable<{ uid: string }, null>(
   functions,
   FUNCTION_LIST.userPurchased,
 );
+
+export const addServeyResult = httpsCallable<
+  { serveyResult: ServeyProblemItem[]; createdAt: number },
+  { success: boolean; message: string }
+>(functions, FUNCTION_LIST.addServeyResult);
 
 const provider = new GoogleAuthProvider();
 provider.addScope('profile');
@@ -119,6 +124,7 @@ export const FIRESTORE_COLLECTIONS = {
     results: 'Results',
     title: 'Titles',
   },
+  serveyResults: 'ServeyResults',
 } as const;
 
 export type FireStoreAdminType = {
@@ -138,6 +144,7 @@ export type FireStoreUserType = {
 
 export type FireStorePromptType = {
   contents: string;
+  id: string;
 };
 
 export type FireStoreChattingItemsType = {
@@ -162,6 +169,18 @@ export type FireStoreServeyItemType = {
 export type FireStoreChattingItemType = {
   contents: string;
   sender: 'SYSTEM' | 'USER';
+};
+
+export type ServeyProblemItem = {
+  question: string;
+  answer: string;
+};
+
+export type ServeyResult = {
+  id: string;
+  chattingItems: FireStoreChattingItemType[];
+  serveyResult: ServeyProblemItem[];
+  createdAt: number;
 };
 
 export async function getDocDataFromFirestore(
@@ -214,7 +233,7 @@ export async function setDocDataToFirestore(
 ) {
   const docRef = doc(firestore, collection, path);
 
-  return setDoc(docRef, data);
+  return setDoc(docRef, data, { merge: true });
 }
 
 export async function addChattingItem(

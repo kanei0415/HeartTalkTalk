@@ -24,7 +24,7 @@ class UserService {
     return this.userCollectionRef.doc(uid);
   }
 
-  async addUser(uid: string, name: string, image: string, createdAt: number) {
+  async addUser(uid: string, name: string, image: string, createdAt: number, id?: string) {
     const userDocRef = this.getDocRefById(uid);
 
     const userData = (await userDocRef.get()).data();
@@ -36,15 +36,19 @@ class UserService {
       };
     }
 
-    await userDocRef.set({
-      name,
-      uid,
-      image,
-      days: 0,
-      config: "",
-      createdAt,
-      reservedDays: 5,
-    } satisfies FireStoreUserType);
+    await userDocRef.set(
+      {
+        name,
+        uid,
+        image,
+        days: 0,
+        config: "",
+        createdAt,
+        reservedDays: 5,
+        id,
+      } satisfies FireStoreUserType,
+      {merge: true},
+    );
 
     const chattingItemsResult = await chattingItemsService.addNewChatting(uid, 1, createdAt);
     const resultResult = await resultsService.addNewResult(uid, 1, createdAt);

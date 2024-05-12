@@ -5,11 +5,8 @@ import {
   FireStoreAdminType,
   FireStorePromptType,
   FireStoreServeyItemType,
-  PROMPTS,
 } from '@libs/firebase';
 import React from 'react';
-
-const tabs = Object.values(PROMPTS);
 
 type Props = {
   admin: FireStoreAdminType;
@@ -68,7 +65,7 @@ const AdminMain = ({
           </div>
         </div>
         <div style={{ height: 24 }} className='flex-1'>
-          {tabs.map((tab, i) => (
+          {prompts.map((prompt, i) => (
             <button
               onClick={() => onTabClicked(i)}
               key={i}
@@ -76,7 +73,9 @@ const AdminMain = ({
               className={`flex flex-row items-center p-4 border rounded border-blue ${
                 currentTab === i && 'bg-blue bg-opacity-50'
               }`}>
-              <span className='text-base font-regular text-black'>{tab}</span>
+              <span className='text-base font-regular text-black'>
+                {prompt.id}
+              </span>
               <div className='flex-1'></div>
               <img src={images.main.chattingArrow} alt='chatting btn' />
             </button>
@@ -102,7 +101,7 @@ const AdminMain = ({
       </section>
       {!serveySelected && currentTab >= 0 && (
         <section className='flex-1 flex-col justify-center items-stretch p-8'>
-          <h1 className='text-center'>{tabs[currentTab]}</h1>
+          <h1 className='text-center'>{prompts[currentTab].id}</h1>
           <div style={{ height: 24 }}></div>
           {prompts.length > 0 && (
             <textarea

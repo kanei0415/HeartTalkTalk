@@ -4,6 +4,7 @@ import usersService from "../modules/users/users.service";
 import promptsService from "../modules/chattings/prompts/prompts.service";
 import {DEFAULT_PROMPTS, FireStorePromptType, PROMPTS} from "../modules/chattings/prompts/prompts.interface";
 import {FireStoreChattingItemType} from "../modules/chattings/chatting-items/chatting.items.interface";
+import {ServeyProblemItem} from "../modules/servey-results/servey-result.interface";
 
 const NODE_ENV = "DEV";
 
@@ -74,6 +75,12 @@ class OpenAIService {
 
       return this.getResponse(prompt.contents + user.config, "상담을 시작하고 싶어요. 고민을 물어봐 주세요");
     }
+  }
+
+  async getServeyResultMessage(serveyResult: ServeyProblemItem[]) {
+    const promptData = (await promptsService.getDocData(PROMPTS.serveyResultMessagePrompt)) + serveyResult.map(({question, answer}) => question + " " + answer).join();
+
+    return this.getResponse(promptData, "제가 겪고 있는 병명은 뭐고, 어떻게 해야하나요?");
   }
 
   getResponse(systemPrompt: string, message: string) {

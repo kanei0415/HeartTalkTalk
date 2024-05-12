@@ -10,7 +10,9 @@ export default function useBackdrop() {
 
   const dispatch = useDispatch();
 
-  const __backdropOn = useCallback(() => dispatch(backdropOn()), [dispatch]);
+  const __backdropOn = useCallback(() => {
+    dispatch(backdropOn());
+  }, [dispatch]);
 
   const __backdropOff = useCallback(() => dispatch(backdropOff()), [dispatch]);
 

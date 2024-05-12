@@ -5,7 +5,6 @@ import {
   FIRESTORE_COLLECTIONS,
   FireStorePromptType,
   FireStoreServeyItemType,
-  PROMPTS,
   getDocDataFromFirestore,
   getOnSnapShotCollectionFromFireStore,
   setDocDataToFirestore,
@@ -17,8 +16,6 @@ import {
   removeStorageData,
 } from '@libs/webStorage';
 import useBackdrop from '@hooks/store/useBackdrop';
-
-const tabs = Object.values(PROMPTS);
 
 const AdminMainContainer = () => {
   const { __routeWithReset, __back } = useRoute();
@@ -94,16 +91,16 @@ const AdminMainContainer = () => {
 
     await setDocDataToFirestore(
       FIRESTORE_COLLECTIONS.prompts,
-      tabs[currentTab],
+      prompts[currentTab].id,
       {
         contents: prompt,
-      } satisfies FireStorePromptType,
+      },
     );
 
     alert('변경되었습니다');
 
     __backdropOff();
-  }, [currentTab, prompt, __backdropOn, __backdropOff]);
+  }, [currentTab, prompt, prompts, __backdropOn, __backdropOff]);
 
   const onSelectTabClicked = useCallback(() => {
     setServeySelected(true);
@@ -178,7 +175,7 @@ const AdminMainContainer = () => {
     };
   }, []);
 
-  return (
+  return prompts.length > 0 ? (
     <AdminMain
       admin={admin}
       currentTab={currentTab}
@@ -196,7 +193,7 @@ const AdminMainContainer = () => {
       onServeyItemUpdateClicked={onServeyItemUpdateClicked}
       serveyItemsUpdateBtnActiveList={serveyItemsUpdateBtnActiveList}
     />
-  );
+  ) : null;
 };
 
 export default AdminMainContainer;
