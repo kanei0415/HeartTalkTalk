@@ -8,4 +8,5 @@ export interface FireStoreUserType {
   config: string;
   createdAt: number;
   reservedDays: number;
+  id?: string;
 }
