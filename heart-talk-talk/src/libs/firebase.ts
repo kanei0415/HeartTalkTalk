@@ -259,9 +259,11 @@ export async function addChattingItem(
 export async function uploadFileToStorage(name: string, image: File | null) {
   if (!image) return null;
 
-  const storageRef = ref(storage, `images/${name}`);
+  const storageRef = ref(storage, `images/${name}jpeg`);
 
-  const result = await uploadBytes(storageRef, image);
+  const result = await uploadBytes(storageRef, image, {
+    contentType: 'image/jpeg',
+  });
 
   return getDownloadURL(result.ref);
 }

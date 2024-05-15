@@ -10,5 +10,6 @@ extension Image {
         case google = "icGoogle"
         case sender = "icSender"
         case send = "icSend"
+        case camera = "icCamera"
     }
 }

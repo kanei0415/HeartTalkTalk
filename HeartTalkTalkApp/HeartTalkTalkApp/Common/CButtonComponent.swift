@@ -12,15 +12,18 @@ struct CButtonComponent: View {
                     onTapGesturedHandler()
                 }
             }, label: {
-                Text(self.buttonLabel)
-                    .font(
-                        Font.getCustomFontStyle(
-                            customFont: .roboto,
-                            fontWeight: .medium,
-                            size: 15
+                VStack {
+                    Text(self.buttonLabel)
+                        .font(
+                            Font.getCustomFontStyle(
+                                customFont: .roboto,
+                                fontWeight: .medium,
+                                size: 15
+                            )
                         )
-                    )
-                    .foregroundStyle(self.active ? Color.white : Color.customStoneColor)
+                        .foregroundStyle(self.active ? Color.white : Color.customStoneColor)
+                }
+                .frame(maxWidth: .infinity, minHeight: 48)
             })
         }
         .frame(maxWidth: .infinity, minHeight: 48)

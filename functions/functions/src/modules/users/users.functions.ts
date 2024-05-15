@@ -18,7 +18,7 @@ export const DeleteUserData = functions
   .onDelete(async (user: UserRecord) => {
     const {uid} = user;
 
-    admin.storage().bucket().file(`image/${uid}`).delete();
+    admin.storage().bucket().file(`image/${uid}.jpeg`).delete();
 
     await usersService.getDocRefById(uid).delete();
 

@@ -65,6 +65,8 @@
 		BCB49B812BF027E100433554 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = BCB49B802BF027E100433554 /* RxCocoa */; };
 		BCB49B832BF027E100433554 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = BCB49B822BF027E100433554 /* RxRelay */; };
 		BCB49B852BF027E100433554 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BCB49B842BF027E100433554 /* RxSwift */; };
+		BCE95A7F2BF422E6007EA6E5 /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE95A7E2BF422E5007EA6E5 /* ProfileImage.swift */; };
+		BCE95A812BF44B49007EA6E5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BCE95A802BF44B49007EA6E5 /* FirebaseStorage */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,6 +162,7 @@
 		BCA910512BE8F37F0020D746 /* IamportPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IamportPaymentViewController.swift; sourceTree = "<group>"; };
 		BCA910542BEC2FDA0020D746 /* LoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
 		BCB49B6E2BEF9FC800433554 /* IamportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IamportView.swift; sourceTree = "<group>"; };
+		BCE95A7E2BF422E5007EA6E5 /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		BEA83EFFA5DF04DB41883309 /* Pods_HeartTalkTalkApp_HeartTalkTalkAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeartTalkTalkApp_HeartTalkTalkAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -179,6 +182,7 @@
 				BC8F0CF12BE8BC5A00AC1D80 /* FirebaseAnalytics in Frameworks */,
 				BC8F0CFB2BE8BC5A00AC1D80 /* GoogleSignIn in Frameworks */,
 				BCB49B812BF027E100433554 /* RxCocoa in Frameworks */,
+				BCE95A812BF44B49007EA6E5 /* FirebaseStorage in Frameworks */,
 				BCB49B832BF027E100433554 /* RxRelay in Frameworks */,
 				BCB49B7F2BF027E100433554 /* RxBlocking in Frameworks */,
 			);
@@ -313,6 +317,7 @@
 				BC7C899A2BE4589B001F303A /* CInputComponent.swift */,
 				BC7C89DC2BE4CBE8001F303A /* CButtonComponent.swift */,
 				BCB49B6E2BEF9FC800433554 /* IamportView.swift */,
+				BCE95A7E2BF422E5007EA6E5 /* ProfileImage.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -459,6 +464,7 @@
 				BCB49B802BF027E100433554 /* RxCocoa */,
 				BCB49B822BF027E100433554 /* RxRelay */,
 				BCB49B842BF027E100433554 /* RxSwift */,
+				BCE95A802BF44B49007EA6E5 /* FirebaseStorage */,
 			);
 			productName = HeartTalkTalkApp;
 			productReference = BC7C89632BE439DF001F303A /* HeartTalkTalkApp.app */;
@@ -603,6 +609,7 @@
 				BC7C8A722BE76496001F303A /* Title.swift in Sources */,
 				BCA910522BE8F37F0020D746 /* IamportPaymentViewController.swift in Sources */,
 				BC7C89E62BE59FE7001F303A /* RootEnvironmentObject.swift in Sources */,
+				BCE95A7F2BF422E6007EA6E5 /* ProfileImage.swift in Sources */,
 				BC7C89E92BE5A084001F303A /* RootNavigationStack.swift in Sources */,
 				BC7C89A52BE4B0B0001F303A /* ImageExtension.swift in Sources */,
 				BC7C8A0A2BE6E3D4001F303A /* Functions.swift in Sources */,
@@ -793,6 +800,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HeartTalkTalkApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "마음톡톡";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사용자 프로필 사진 등록을 위해 사진 라이브러리를 사용합니다";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -825,6 +834,8 @@
 				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = HeartTalkTalkApp/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = "마음톡톡";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "사용자 프로필 사진 등록을 위해 사진 라이브러리를 사용합니다";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -1065,6 +1076,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = BCA910432BE8F09B0020D746 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
+		};
+		BCE95A802BF44B49007EA6E5 /* FirebaseStorage */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = BC7C89922BE43FB7001F303A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseStorage;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

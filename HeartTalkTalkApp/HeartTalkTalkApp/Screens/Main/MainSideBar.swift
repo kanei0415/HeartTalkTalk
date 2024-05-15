@@ -1,5 +1,6 @@
 import SwiftUI
 import SwiftData
+import FirebaseAuth
 
 struct MainSideBar: View {
     @EnvironmentObject var rootState: RootEnvironmentObject
@@ -73,6 +74,19 @@ struct MainSideBar: View {
     func onPaymentBtnTapped() {
         self.rootState.iamportViewVisible = true
     }
+    
+    func onDeleteAccountBtnTapped() {
+        guard let user = Auth.auth().currentUser else { return }
+        
+        Task {
+            user.delete() {err in
+                if err == nil {
+                    self.rootState.user = nil
+                    self.context.delete(loginInfos.last!)
+                }
+            }
+        }
+    }
 }
 
 extension MainSideBar {
@@ -90,6 +104,12 @@ extension MainSideBar {
                 self.userDayListView
                 
                 Spacer()
+                
+                CButtonComponent(
+                    active: true,
+                    buttonLabel: "회원탈퇴",
+                    onTapGesturedHandler: { onDeleteAccountBtnTapped() }
+                ).padding(.bottom, 8)
                 
                 CButtonComponent(
                     active: true,
@@ -111,7 +131,7 @@ extension MainSideBar {
                     AsyncImage(url: URL(string: userProfile)) { image in
                         image
                             .resizable()
-                            .scaledToFit()
+                            .scaledToFill()
                             .frame(width: 48, height: 48)
                             .clipShape(Circle())
                     } placeholder: {

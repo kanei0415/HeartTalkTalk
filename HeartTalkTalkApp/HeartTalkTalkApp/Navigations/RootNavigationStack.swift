@@ -35,8 +35,6 @@ struct RootNavigationStack: View {
                 }
             }
         }
-        
-        self.rootState.path.append(StackScreen.main.rawValue)
     }
     
     var body: some View {
