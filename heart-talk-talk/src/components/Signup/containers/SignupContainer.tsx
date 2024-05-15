@@ -94,7 +94,7 @@ const SignupContainer = () => {
         name: uc.user.displayName ?? '새로운 이용자',
         image: uc.user.photoURL,
         createdAt: getCurrentDayData(),
-        id: prev || undefined,
+        id: prev || '',
       });
 
       if (result.data.success) {
@@ -164,7 +164,7 @@ const SignupContainer = () => {
       name,
       image: downloadUrl || '',
       createdAt: getCurrentDayData(),
-      id: prev || undefined,
+      id: prev || '',
     });
 
     if (result.data.success) {

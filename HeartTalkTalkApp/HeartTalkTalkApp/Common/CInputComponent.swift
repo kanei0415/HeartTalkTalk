@@ -110,6 +110,17 @@ struct CInputComponent: View {
                     size: 12
                 )
             )
+        
+        +
+        Text(self.isNeededValue ? "*" : "")
+            .font(
+                Font.getCustomFontStyle(
+                    customFont: .roboto,
+                    fontWeight: .semibold,
+                    size: 12
+                )
+            )
+            .foregroundStyle(Color.customRedColor)
     }
     
     private var inputFieldView: some View {
@@ -158,18 +169,6 @@ struct CInputComponent: View {
     
     private var statusMessageView: some View {
         HStack {
-            if let success = self.successInfo {
-                Text(success.successMessage)
-                    .font(
-                        Font.getCustomFontStyle(
-                            customFont: .roboto,
-                            fontWeight: .regular,
-                            size: 12
-                        )
-                    )
-                    .foregroundStyle(Color.customGreenColor)
-            }
-            
             if let error = self.errorInfo {
                 Text(error.errorMessage)
                     .font(
@@ -180,6 +179,16 @@ struct CInputComponent: View {
                         )
                     )
                     .foregroundStyle(Color.customRedColor)
+            } else if let success = self.successInfo {
+                Text(success.successMessage)
+                    .font(
+                        Font.getCustomFontStyle(
+                            customFont: .roboto,
+                            fontWeight: .regular,
+                            size: 12
+                        )
+                    )
+                    .foregroundStyle(Color.customGreenColor)
             }
         }
         .frame(height: 14)

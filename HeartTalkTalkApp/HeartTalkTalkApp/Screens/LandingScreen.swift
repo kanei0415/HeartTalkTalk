@@ -132,7 +132,8 @@ struct LandingScreen: View {
                         "uid": authResult.user.uid,
                         "name": profile.name,
                         "image": profile.imageURL(withDimension: 400)?.description,
-                        "createdAt": getCreatedDate()
+                        "createdAt": getCreatedDate(),
+                        "id": ""
                     ]
                     
                     let initializeCreatedUser = FunctionsUtil.single.getFunction(type: .initializeCreatedUser)
@@ -198,7 +199,6 @@ struct LandingScreen: View {
                     }
                 }
             )
-            .navigationDestination(for: String.self, destination: { _ in MainScreen() })
             
             Button(action: {
                 onGoogleLoginBtnTapped()
@@ -224,7 +224,6 @@ struct LandingScreen: View {
                     .foregroundColor(Color.customStoneColor)
             }
             .padding(.top, 8)
-            .navigationDestination(for: String.self, destination: { _ in MainScreen() })
             
             Spacer()
             
@@ -253,8 +252,8 @@ struct LandingScreen: View {
                     .foregroundStyle(Color.customPinkColor)
                     
             })
-            .navigationDestination(for: String.self, destination: {_ in SignupScreen()})
-            
+            .navigationDestination(for: String.self, destination: { _  in SignupScreen() })
+        
             Spacer()
         }
         .frame(maxWidth: .infinity)
