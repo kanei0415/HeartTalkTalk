@@ -7,6 +7,7 @@ struct RootNavigationStack: View {
         case landing = "LandingScreen"
         case signup = "SignupScreen"
         case main = "MainScreen"
+        case result = "ResultsScreen"
     }
     
     @EnvironmentObject var rootState: RootEnvironmentObject
@@ -38,20 +39,32 @@ struct RootNavigationStack: View {
     }
     
     var body: some View {
-        NavigationStack(path: $rootState.path) {
-            if self.rootState.user == nil {
-                LandingScreen()
-            } else {
-                MainScreen()
+        ZStack {
+            NavigationStack(path: $rootState.path) {
+                if self.rootState.user == nil {
+                    LandingScreen()
+                } else {
+                    MainScreen()
+                    .navigationDestination(for: String.self, destination: { name in
+                        switch(name) {
+                        case StackScreen.result.rawValue: ResultScreen()
+                        default: MainScreen()
+                        }
+                    })
+                }
             }
-        }
-        .sheet(isPresented: self.$rootState.iamportViewVisible) {
-            IamportView()
-                .ignoresSafeArea()
-        }
-        .onAppear {
-            if let uid = self.loginInfos.first?.uid {
-                self.loadUserData(uid: uid)
+            .sheet(isPresented: self.$rootState.iamportViewVisible) {
+                IamportView()
+                    .ignoresSafeArea()
+            }
+            .onAppear {
+                if let uid = self.loginInfos.first?.uid {
+                    self.loadUserData(uid: uid)
+                }
+            }
+            
+            if self.rootState.backDropVisible {
+                Color.customBlackColor.ignoresSafeArea().opacity(0.5).onTapGesture { }
             }
         }
     }

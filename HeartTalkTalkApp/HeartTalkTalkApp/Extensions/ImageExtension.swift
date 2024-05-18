@@ -11,5 +11,6 @@ extension Image {
         case sender = "icSender"
         case send = "icSend"
         case camera = "icCamera"
+        case report = "icReport"
     }
 }

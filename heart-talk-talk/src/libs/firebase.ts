@@ -58,6 +58,7 @@ export const FUNCTION_LIST = {
   initializeCreatedUser: 'InitializeCreatedUser',
   userPurchased: 'UserPurchased',
   addServeyResult: 'AddServeyResult',
+  addReport: 'AddReport',
 } as const;
 
 export const newChattingCreateFunction = httpsCallable<
@@ -90,6 +91,11 @@ export const addServeyResult = httpsCallable<
   { serveyResult: ServeyProblemItem[]; createdAt: number },
   { success: boolean; message: string }
 >(functions, FUNCTION_LIST.addServeyResult);
+
+export const addReport = httpsCallable<
+  { uid: string; day: number; content: string },
+  { success: boolean; message: string }
+>(functions, FUNCTION_LIST.addReport);
 
 const provider = new GoogleAuthProvider();
 provider.addScope('profile');
@@ -125,6 +131,7 @@ export const FIRESTORE_COLLECTIONS = {
     title: 'Titles',
   },
   serveyResults: 'ServeyResults',
+  reports: 'Reports',
 } as const;
 
 export type FireStoreAdminType = {
@@ -182,6 +189,14 @@ export type ServeyResult = {
   serveyResult: ServeyProblemItem[];
   createdAt: number;
 };
+
+export interface FirestoreReportType {
+  content: string;
+  id: string;
+  day: number;
+  uid: string;
+  reply?: string;
+}
 
 export async function getDocDataFromFirestore(
   collection: string,

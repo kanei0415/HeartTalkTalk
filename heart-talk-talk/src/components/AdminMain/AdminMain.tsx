@@ -5,6 +5,7 @@ import {
   FireStoreAdminType,
   FireStorePromptType,
   FireStoreServeyItemType,
+  FirestoreReportType,
 } from '@libs/firebase';
 import React from 'react';
 
@@ -24,6 +25,11 @@ type Props = {
   onServeyItemAddBtnClicked: () => void;
   onServeyItemUpdateClicked: (index: number) => void;
   serveyItemsUpdateBtnActiveList: boolean[];
+  onReportTabClicked: () => void;
+  reportSelected: boolean;
+  reports: FirestoreReportType[];
+  onReplyChanged: (index: number, content: string) => void;
+  onReplySaveBtnClicked: (index: number) => void;
 };
 
 const AdminMain = ({
@@ -42,6 +48,11 @@ const AdminMain = ({
   onServeyItemAddBtnClicked,
   onServeyItemUpdateClicked,
   serveyItemsUpdateBtnActiveList,
+  onReportTabClicked,
+  reportSelected,
+  reports,
+  onReplyChanged,
+  onReplySaveBtnClicked,
 }: Props) => {
   return (
     <article className='flex flex-row w-full h-full p-4'>
@@ -88,6 +99,18 @@ const AdminMain = ({
             }`}>
             <span className='text-base font-regular text-black'>
               {'설문조사 문항'}
+            </span>
+            <div className='flex-1'></div>
+            <img src={images.main.chattingArrow} alt='chatting btn' />
+          </button>
+          <button
+            onClick={onReportTabClicked}
+            style={{ height: 48, marginBottom: 16, width: 360 }}
+            className={`flex flex-row items-center p-4 border rounded border-blue ${
+              reportSelected && 'bg-blue bg-opacity-50'
+            }`}>
+            <span className='text-base font-regular text-black'>
+              {'사용자 신고 채팅'}
             </span>
             <div className='flex-1'></div>
             <img src={images.main.chattingArrow} alt='chatting btn' />
@@ -158,6 +181,46 @@ const AdminMain = ({
             label='설문지 문항 추가'
             activate
           />
+        </section>
+      )}
+      {reportSelected && (
+        <section className='flex-1 flex-col justify-center items-stretch p-8 overflow-y-scroll'>
+          <h1 className='text-center'>{'사용자 신고 채팅'}</h1>
+          <div style={{ height: 24 }}></div>
+          {reports.map((report, index) => (
+            <div>
+              <div className='text-base font-bold text-black'>{`UID: ${report.uid} DAY: ${report.day}`}</div>
+              <div style={{ height: 4 }} />
+              <div
+                style={{ borderRadius: 4 }}
+                className='p-4 border border-black background-zinc text-xl text-black'>
+                {report.content}
+              </div>
+              <div style={{ height: 4 }} />
+              <div className='flex flex-row items-center'>
+                <CInputContainer
+                  type='text'
+                  label={'답변'}
+                  defaultValue={report.reply}
+                  onChange={(v) => {
+                    onReplyChanged(index, v);
+                  }}
+                  isNeededValue={false}
+                  placeholder='답변 내용을 입력해주세요'
+                  error={null}
+                  success={null}
+                />
+                <div style={{ width: 200, marginLeft: 20 }}>
+                  <CButtonContainer
+                    onClicked={() => onReplySaveBtnClicked(index)}
+                    label='답변하기'
+                    activate
+                  />
+                </div>
+              </div>
+              <div style={{ height: 12 }} />
+            </div>
+          ))}
         </section>
       )}
     </article>

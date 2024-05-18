@@ -9,4 +9,5 @@ export interface FireStoreUserType {
   createdAt: number;
   reservedDays: number;
   id?: string;
+  reports: string[];
 }

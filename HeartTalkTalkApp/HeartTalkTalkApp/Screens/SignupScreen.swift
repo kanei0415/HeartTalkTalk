@@ -65,6 +65,8 @@ struct SignupScreen: View {
     }
     
     func onSignupBtnTapped() {
+        self.rootState.backDropVisible = true
+        
         if !self.signupBtnActive {
             return
         }
@@ -125,12 +127,16 @@ struct SignupScreen: View {
                     self.rootState.user = userDocData
                     
                     self.setUserData(uid: uid)
+                    
+                    self.rootState.backDropVisible = false
                 }
             }
         }
     }
     
     func onGoogleSignInBtnTapped() {
+        self.rootState.backDropVisible = true
+        
         guard let rootViewController = self.rootViewController() else {
             return
         }
@@ -200,6 +206,8 @@ struct SignupScreen: View {
                 
                 self.rootState.user = result
                 self.setUserData(uid: result.uid)
+                
+                self.rootState.backDropVisible = false
             }
         }
     }

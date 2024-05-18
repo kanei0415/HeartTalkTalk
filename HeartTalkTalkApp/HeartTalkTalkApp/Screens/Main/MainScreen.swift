@@ -43,16 +43,20 @@ struct MainScreen: View {
     }
     
     func responseBtnTapped() {
+        self.rootState.backDropVisible = true
+        
         guard let user = self.rootState.user else {
             return;
         }
         
         FunctionsUtil.single.chattingResponseAdd(uid: user.uid, day: self.day) { res, err in
             guard let resData = res?.data as? ResponseData else {
+                self.rootState.backDropVisible = false
+                
                 return;
             }
             
-            
+            self.rootState.backDropVisible = false
         }
     }
     
@@ -120,6 +124,8 @@ struct MainScreen: View {
     }
     
     func sendBtnTapped() {
+        self.rootState.backDropVisible = true
+        
         guard let uid = self.rootState.user?.uid else {
             return
         }
@@ -136,6 +142,8 @@ struct MainScreen: View {
         docRef.setData(["items": FieldValue.arrayUnion([["contents": self.inputValue, "sender": "USER"]])], merge: true)
         
         self.inputValue = ""
+        
+        self.rootState.backDropVisible = false
     }
     
     var body: some View {
@@ -151,17 +159,40 @@ struct MainScreen: View {
 
 extension MainScreen {
     func chattingIamgeView(chattingContent: String) -> some View {
-        return  VStack {
-            Text(chattingContent)
-                .padding(10)
+        return  VStack(spacing: 0) {
+            HStack { EmptyView() }.frame(height: 20)
+            
+            VStack {
+                Text(chattingContent)
+                    .padding(10)
+            }
+            .background {
+                RoundedRectangle(cornerRadius: 4)
+                    .stroke(Color.customBlueColor, lineWidth: 1)
+                    .background(Color.customZincColor)
+            }
         }
         .layoutPriority(1)
-        .background {
-            RoundedRectangle(cornerRadius: 4)
-                .stroke(Color.customBlueColor, lineWidth: 1)
-                .background(Color.customZincColor)
+    }
+    
+    func reportBtnTapped(content: String) {
+        guard let user = self.rootState.user else {
+            return
         }
-        .offset(y: 20)
+        
+        self.rootState.backDropVisible = true
+        
+        FunctionsUtil.single.addReport(uid: user.uid, day: self.day, content: content) { res,err in
+            if let data = res?.data as? ResponseData {
+                if data.success {
+                    
+                } else {
+                    
+                }
+            }
+            
+            self.rootState.backDropVisible = false
+        }
     }
     
     var mainScreenView: some View {
@@ -188,7 +219,9 @@ extension MainScreen {
                 
                 Spacer()
                 
-                Button(action: {}, label: {
+                Button(action: {
+                    self.rootState.path.append(RootNavigationStack.StackScreen.result.rawValue)
+                }, label: {
                     Image(systemName: "arrow.right")
                         .foregroundColor(.customBlackColor)
                 })
@@ -198,7 +231,7 @@ extension MainScreen {
             .padding(12)
             .background(Color.customZincColor)
             
-            ScrollView() {
+            ScrollView(showsIndicators: false) {
                 VStack(alignment: .leading) {
                     ForEach(self.rootState.chattingItem?.items ?? [], id: \.contents) { item in
                         if(item.sender == "SYSTEM") {
@@ -207,8 +240,24 @@ extension MainScreen {
                                     Image(Image.Icon.sender.rawValue)
                                         .frame(width: 40)
                                     
+                                    VStack { EmptyView() }.frame(width: 4)
+                                    
                                     self.chattingIamgeView(chattingContent: item.contents)
                                 }
+                                
+                                HStack(spacing: 4) {
+                                    Image(Image.Icon.report.rawValue)
+                                    
+                                    Text("부적절한 응답 신고하기")
+                                        .font(
+                                            Font.getCustomFontStyle(customFont: .pretendard, fontWeight: .bold, size: 12)
+                                        )
+                                        .foregroundStyle(Color.customPinkColor)
+                                        .onTapGesture {
+                                            reportBtnTapped(content: item.contents)
+                                        }
+                                }
+                                .offset(x: 40)
                             }
                             .padding(.top, 20)
                         } else {
