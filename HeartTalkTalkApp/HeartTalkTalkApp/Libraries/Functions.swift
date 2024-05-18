@@ -20,6 +20,7 @@ class FunctionsUtil {
         case chattingResponseAdd = "ChattingResponseAdd"
         case initializeCreatedUser = "InitializeCreatedUser"
         case userPurchased = "UserPurchased"
+        case addReport = "AddReport"
     }
     
     func getFunction(type: FunctionsType) -> HTTPSCallable {
@@ -40,5 +41,9 @@ class FunctionsUtil {
     
     func userPurchased(uid: String, callback: @escaping Callback) {
         getFunction(type: .userPurchased).call(["uid": uid], completion: callback)
+    }
+    
+    func addReport(uid: String, day: Int, content: String, callback: @escaping Callback) {
+        getFunction(type: .addReport).call(["uid": uid, "day": day, "content": content],completion: callback)
     }
 }

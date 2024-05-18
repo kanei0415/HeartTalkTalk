@@ -8,4 +8,5 @@ struct FirestoreUser: Codable {
     var days: Int
     var createdAt: Int
     var reservedDays: Int
+    var reports: [String]
 }

@@ -46,6 +46,7 @@ class UserService {
         createdAt,
         reservedDays: 5,
         id,
+        reports: [],
       } satisfies FireStoreUserType,
       {merge: true},
     );

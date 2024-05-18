@@ -4,16 +4,8 @@ import GoogleSignIn
 import SwiftData
 
 struct LandingScreen: View {
-    @State private var email: String = "" {
-        willSet {
-            self.onEmailError = nil
-        }
-    }
-    @State private var password: String = "" {
-        willSet {
-            self.onPasswordError = nil
-        }
-    }
+    @State private var email: String = ""
+    @State private var password: String = ""
     
     @State private var onEmailError: CInputComponent.InputError? = nil
     @State private var onEmailSuccess: CInputComponent.InputSuccess? = nil
@@ -47,6 +39,8 @@ struct LandingScreen: View {
     }
     
     func onLoginBtnTapped() async {
+        self.rootState.backDropVisible = true
+        
         if !self.emailValid || !self.passwordValid {
             return;
         }
@@ -63,6 +57,9 @@ struct LandingScreen: View {
             self.onPasswordError = CInputComponent.InputError(
                 onError: true, errorMessage: "계정 정보가 올바르지 않습니다"
             )
+            
+            self.rootState.backDropVisible = false
+            
             return
         }
         
@@ -79,16 +76,22 @@ struct LandingScreen: View {
         
         Task {
             guard let userDocData = try? await userDocRef.getDocument().data(as: FirestoreUser.self) else {
+                self.rootState.backDropVisible = false
+                
                 return
             }
             
             self.rootState.user = userDocData
             
             self.setUserData(uid: uid)
+            
+            self.rootState.backDropVisible = false
         }
     }
     
     func onGoogleLoginBtnTapped() {
+        self.rootState.backDropVisible = true
+        
         guard let rootViewController = self.rootViewController() else {
             return
         }
@@ -158,6 +161,8 @@ struct LandingScreen: View {
                 
                 self.rootState.user = result
                 self.setUserData(uid: result.uid)
+                
+                self.rootState.backDropVisible = false
             }
         }
     }
@@ -258,5 +263,13 @@ struct LandingScreen: View {
         }
         .frame(maxWidth: .infinity)
         .padding()
+        .onChange(of: self.email) {
+            self.onEmailError = nil
+            self.onEmailSuccess = nil
+        }
+        .onChange(of: self.password) {
+            self.onPasswordError = nil
+            self.onPasswordSuccess = nil
+        }
     }
 }

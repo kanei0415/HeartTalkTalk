@@ -17,6 +17,7 @@ const images = {
     chattingArrow: `${FILE_TREE.main}/ic-chatting-arrow.${FILE_EXT.image}`,
     systemSender: `${FILE_TREE.main}/ic-main-system-sender.${FILE_EXT.image}`,
     send: `${FILE_TREE.main}/ic-main-send.${FILE_EXT.image}`,
+    report: `${FILE_TREE.main}/ic-report.${FILE_EXT.image}`,
   },
   landing: {
     logo: `${FILE_TREE.landing}/ic-landing-logo.${FILE_EXT.image}`,

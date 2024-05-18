@@ -12,6 +12,7 @@ type Props = {
   chattable: boolean;
   isResponsable: boolean;
   onResponseMessageAddBtnClicked: () => void;
+  onMessageReportClicked: (content: string) => void;
 };
 
 const MainChatting = ({
@@ -23,32 +24,46 @@ const MainChatting = ({
   chattable,
   isResponsable,
   onResponseMessageAddBtnClicked,
+  onMessageReportClicked,
 }: Props) => {
   return (
     <>
       <div
         style={{ paddingBottom: 120 }}
-        className='chatting-container w-full h-full flex flex-col p-4 overflow-y-auto'>
+        className='chatting-container w-full h-full flex flex-col p-8 overflow-y-auto'>
         {chattingItems.items.map((item, index) =>
           item.sender === 'SYSTEM' ? (
-            <div key={index} className='w-full flex flex-row justify-start p-4'>
-              <img
-                style={{ width: 40, height: 40, borderRadius: 20 }}
-                src={images.main.systemSender}
-                alt='system sender'
-              />
-              <div
-                style={{
-                  padding: 12,
-                  borderRadius: 8,
-                  borderTopLeftRadius: 2,
-                  marginTop: 20,
-                  marginLeft: 8,
-                }}
-                className='bg-zinc border-blue border text-base text-black font-regular'>
-                {item.contents}
+            <>
+              <div key={index} className='w-full flex flex-row justify-start'>
+                <img
+                  style={{ width: 40, height: 40, borderRadius: 20 }}
+                  src={images.main.systemSender}
+                  alt='system sender'
+                />
+                <div
+                  style={{
+                    padding: 12,
+                    borderRadius: 8,
+                    borderTopLeftRadius: 2,
+                    marginTop: 20,
+                    marginLeft: 8,
+                  }}
+                  className='bg-zinc border-blue border text-base text-black font-regular'>
+                  {item.contents}
+                </div>
               </div>
-            </div>
+              <div style={{ height: 4 }} />
+              <div
+                onClick={() => onMessageReportClicked(item.contents)}
+                style={{ marginLeft: 48, marginBottom: 20 }}
+                className='flex flex-row items-center cursor-pointer'>
+                <img src={images.main.report} alt='report icon' />
+                <div style={{ width: 4 }} />
+                <div className='font-bold text-s text-pink'>
+                  {'부적절한 응답 신고하기'}
+                </div>
+              </div>
+            </>
           ) : (
             <div key={index} className='w-full flex flex-row justify-end p-4'>
               <div

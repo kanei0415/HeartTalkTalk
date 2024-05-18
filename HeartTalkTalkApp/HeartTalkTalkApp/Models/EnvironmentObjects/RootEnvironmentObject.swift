@@ -9,4 +9,5 @@ class RootEnvironmentObject: ObservableObject {
     @Published var chattingItem: FirestoreChattingItem?
     @Published var results: FirestoreResult?
     @Published var iamportViewVisible = false
+    @Published var backDropVisible = false
 }

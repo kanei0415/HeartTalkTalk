@@ -51,23 +51,22 @@ struct MainSideBar: View {
     }
     
     func onLogoutBtnTapped() {
+        self.rootState.backDropVisible = true
         context.delete(loginInfos.last!)
         self.rootState.user = nil
+        self.rootState.backDropVisible = false
     }
     
     func newChatStartTapped() {
+        self.rootState.backDropVisible = true
+        
         guard let user = self.rootState.user else {
             return
         }
         
         FunctionsUtil.single.newChattingCreate(uid: user.uid, createdAt: getCreatedDate()) { res, err in
-            guard let responseData = res?.data as? ResponseData else {
-                return
-            }
-            
-            if(responseData.success) {
-                self.sideVisible = false
-            }
+            self.sideVisible = false
+            self.rootState.backDropVisible = false
         }
     }
     
@@ -76,6 +75,8 @@ struct MainSideBar: View {
     }
     
     func onDeleteAccountBtnTapped() {
+        self.rootState.backDropVisible = true
+        
         guard let user = Auth.auth().currentUser else { return }
         
         Task {
@@ -83,6 +84,7 @@ struct MainSideBar: View {
                 if err == nil {
                     self.rootState.user = nil
                     self.context.delete(loginInfos.last!)
+                    self.rootState.backDropVisible = false
                 }
             }
         }

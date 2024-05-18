@@ -11,6 +11,7 @@ import {
   FIRESTORE_COLLECTIONS,
   FireStoreChattingItemsType,
   addChattingItem,
+  addReport,
   chattingResponseAdd,
   getDocDataFromFirestore,
   getOnSnapshotFromFirestore,
@@ -49,6 +50,23 @@ const MainChattingContainer = ({ k }: Props) => {
   }, [chattingItems]);
 
   const inputRef = useRef<HTMLInputElement>(null);
+
+  const onMessageReportClicked = useCallback(
+    async (content: string) => {
+      __backdropOn();
+
+      const res = await addReport({ uid: user.uid, day: k, content });
+
+      if (res.data.success) {
+        alert('정상적으로 신고 되었습니다');
+      } else {
+        alert(res.data.message);
+      }
+
+      __backdropOff();
+    },
+    [user, k, __backdropOn, __backdropOff],
+  );
 
   const onResponseMessageAddBtnClicked = useCallback(async () => {
     __backdropOn();
@@ -139,6 +157,7 @@ const MainChattingContainer = ({ k }: Props) => {
       chattable={chattable}
       isResponsable={isResponsable}
       onResponseMessageAddBtnClicked={onResponseMessageAddBtnClicked}
+      onMessageReportClicked={onMessageReportClicked}
     />
   );
 };
