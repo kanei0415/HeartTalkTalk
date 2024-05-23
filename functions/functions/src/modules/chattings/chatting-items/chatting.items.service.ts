@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin";
-import {FireStoreChattingItemsType, chattingCollections} from "./chatting.items.interface";
+import {CHATTING_STAGES, FireStoreChattingItemsType, chattingCollections} from "./chatting.items.interface";
 import openaiService from "../../../lib/openai.service";
 
 class ChattingItemsService {
@@ -34,6 +34,13 @@ class ChattingItemsService {
         },
       ],
       createdAt,
+      problems: [],
+      keywords: [],
+      solutions: [],
+      validSolutions: [],
+      externalHelp: [],
+      subjects: [],
+      stage: CHATTING_STAGES.COUNSEL_START_STAGE,
     } satisfies FireStoreChattingItemsType);
   }
 }

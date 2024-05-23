@@ -7,9 +7,16 @@ export interface ServeyProblemItem {
   answer: string;
 }
 
+export interface PsychologicalIndexes {
+  anxietyIndex: number;
+  depressionIndex: number;
+  suicideIndex: number;
+}
+
 export interface ServeyResult {
   id: string;
   chattingItems: FireStoreChattingItemType[];
   serveyResult: ServeyProblemItem[];
   createdAt: number;
+  psychologicalIndexes: PsychologicalIndexes;
 }

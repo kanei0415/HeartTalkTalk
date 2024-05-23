@@ -75,7 +75,7 @@ const AdminMain = ({
             <span className='text-black font-bold text-xl'>{'관리자님'}</span>
           </div>
         </div>
-        <div style={{ height: 24 }} className='flex-1'>
+        <div style={{ height: 24 }} className='flex-1 overflow-y-scroll'>
           {prompts.map((prompt, i) => (
             <button
               onClick={() => onTabClicked(i)}
@@ -115,12 +115,12 @@ const AdminMain = ({
             <div className='flex-1'></div>
             <img src={images.main.chattingArrow} alt='chatting btn' />
           </button>
+          <CButtonContainer
+            label='로그아웃'
+            onClicked={onLogoutClicked}
+            activate
+          />
         </div>
-        <CButtonContainer
-          label='로그아웃'
-          onClicked={onLogoutClicked}
-          activate
-        />
       </section>
       {!serveySelected && currentTab >= 0 && (
         <section className='flex-1 flex-col justify-center items-stretch p-8'>
@@ -130,11 +130,10 @@ const AdminMain = ({
             <textarea
               key={currentTab}
               style={{
-                overflow: 'hidden',
                 resize: 'none',
               }}
               rows={20}
-              className='p-4 bg-zinc border border-black text-black font-bold text-xl w-full'
+              className='p-4 bg-zinc border border-black text-black font-bold text-xl w-full overflow-y-scroll'
               onChange={(e) => onPromptChanged(e.target.value)}
               defaultValue={prompts[currentTab].contents}
             />

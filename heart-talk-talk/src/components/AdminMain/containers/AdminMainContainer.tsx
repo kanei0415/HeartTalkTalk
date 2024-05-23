@@ -70,11 +70,15 @@ const AdminMainContainer = () => {
     __back();
   }, [__flushInfo, __back]);
 
-  const onTabClicked = useCallback((tab: number) => {
-    setServeySelected(false);
-    setReportSelected(false);
-    setCurrentTab(tab);
-  }, []);
+  const onTabClicked = useCallback(
+    (tab: number) => {
+      setServeySelected(false);
+      setReportSelected(false);
+      setCurrentTab(tab);
+      setPrompt(prompts[tab].contents);
+    },
+    [prompts],
+  );
 
   const onPromptChanged = useCallback((newValue: string) => {
     setPrompt(newValue);
@@ -90,7 +94,9 @@ const AdminMainContainer = () => {
   const onUpdateBtnClicked = useCallback(async () => {
     __backdropOn();
 
-    if (!currentTab) {
+    if (currentTab === -1) {
+      alert('선택된 프롬프트가 없습니다');
+      __backdropOff();
       return;
     }
 

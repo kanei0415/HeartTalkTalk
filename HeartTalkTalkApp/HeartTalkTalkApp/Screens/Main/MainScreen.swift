@@ -4,8 +4,6 @@ import FirebaseFirestore
 struct MainScreen: View {
     @EnvironmentObject var rootState: RootEnvironmentObject
     
-    @State private var day: Int = 1
-    
     @State var chattingItemUnscriber: ListenerRegistration? = nil {
         didSet {
             oldValue?.remove()
@@ -24,7 +22,7 @@ struct MainScreen: View {
     
     var title: String {
         if let titles = self.rootState.titles {
-            return titles.count >= 1 ? titles[self.day - 1].label : "제목없음"
+            return titles.count >= 1 ? titles[self.rootState.day - 1].label : "제목없음"
         }
         
         return "제목없음"
@@ -49,7 +47,7 @@ struct MainScreen: View {
             return;
         }
         
-        FunctionsUtil.single.chattingResponseAdd(uid: user.uid, day: self.day) { res, err in
+        FunctionsUtil.single.chattingResponseAdd(uid: user.uid, day: self.rootState.day) { res, err in
             guard let resData = res?.data as? ResponseData else {
                 self.rootState.backDropVisible = false
                 
@@ -132,7 +130,7 @@ struct MainScreen: View {
         
         let docRef = FirestoreUtil.single.getDocRef(
             resolvedCollectionPath: FirestoreUtil.single.getCollectionPathResolver(collection: .chattingItems)(["uid": uid]),
-            documentID: String(self.day)
+            documentID: String(self.rootState.day)
         )
         
         guard var prev = self.rootState.chattingItem?.items else {
@@ -151,9 +149,10 @@ struct MainScreen: View {
             self.mainScreenView
             
             if self.sideVisible {
-                MainSideBar(sideVisible: self.$sideVisible, day: self.$day)
+                MainSideBar(sideVisible: self.$sideVisible)
             }
         }
+        .navigationBarHidden(true)
     }
 }
 
@@ -182,7 +181,7 @@ extension MainScreen {
         
         self.rootState.backDropVisible = true
         
-        FunctionsUtil.single.addReport(uid: user.uid, day: self.day, content: content) { res,err in
+        FunctionsUtil.single.addReport(uid: user.uid, day: self.rootState.day, content: content) { res,err in
             if let data = res?.data as? ResponseData {
                 if data.success {
                     
@@ -231,76 +230,84 @@ extension MainScreen {
             .padding(12)
             .background(Color.customZincColor)
             
-            ScrollView(showsIndicators: false) {
-                VStack(alignment: .leading) {
-                    ForEach(self.rootState.chattingItem?.items ?? [], id: \.contents) { item in
-                        if(item.sender == "SYSTEM") {
-                            VStack(alignment: .leading) {
-                                HStack(alignment: .top) {
-                                    Image(Image.Icon.sender.rawValue)
-                                        .frame(width: 40)
+            ScrollViewReader { proxy in
+                ScrollView(showsIndicators: false) {
+                    VStack(alignment: .leading) {
+                        ForEach(self.rootState.chattingItem?.items ?? [], id: \.contents) { item in
+                            if(item.sender == "SYSTEM") {
+                                VStack(alignment: .leading) {
+                                    HStack(alignment: .top) {
+                                        Image(Image.Icon.sender.rawValue)
+                                            .frame(width: 40)
+                                        
+                                        VStack { EmptyView() }.frame(width: 4)
+                                        
+                                        self.chattingIamgeView(chattingContent: item.contents)
+                                    }
                                     
-                                    VStack { EmptyView() }.frame(width: 4)
-                                    
-                                    self.chattingIamgeView(chattingContent: item.contents)
+                                    HStack(spacing: 4) {
+                                        Image(Image.Icon.report.rawValue)
+                                        
+                                        Text("부적절한 응답 신고하기")
+                                            .font(
+                                                Font.getCustomFontStyle(customFont: .pretendard, fontWeight: .bold, size: 12)
+                                            )
+                                            .foregroundStyle(Color.customPinkColor)
+                                            .onTapGesture {
+                                                reportBtnTapped(content: item.contents)
+                                            }
+                                    }
+                                    .offset(x: 40)
                                 }
-                                
-                                HStack(spacing: 4) {
-                                    Image(Image.Icon.report.rawValue)
-                                    
-                                    Text("부적절한 응답 신고하기")
-                                        .font(
-                                            Font.getCustomFontStyle(customFont: .pretendard, fontWeight: .bold, size: 12)
-                                        )
-                                        .foregroundStyle(Color.customPinkColor)
-                                        .onTapGesture {
-                                            reportBtnTapped(content: item.contents)
-                                        }
-                                }
-                                .offset(x: 40)
-                            }
-                            .padding(.top, 20)
-                        } else {
-                            VStack(alignment: .trailing) {
-                                HStack(alignment: .top) {
-                                    self.chattingIamgeView(chattingContent: item.contents)
-                                    
-                                    if let profile = self.rootState.user?.image {
-                                        AsyncImage(url: URL(string: profile)) { image in
-                                            image
-                                                .resizable()
-                                                .scaledToFit()
-                                                .frame(width: 40, height: 40)
-                                                .clipShape(Circle())
-                                        } placeholder: {
+                                .padding(.top, 20)
+                            } else {
+                                VStack(alignment: .trailing) {
+                                    HStack(alignment: .top) {
+                                        self.chattingIamgeView(chattingContent: item.contents)
+                                        
+                                        if let profile = self.rootState.user?.image {
+                                            AsyncImage(url: URL(string: profile)) { image in
+                                                image
+                                                    .resizable()
+                                                    .scaledToFit()
+                                                    .frame(width: 40, height: 40)
+                                                    .clipShape(Circle())
+                                            } placeholder: {
+                                                Circle().frame(width: 40, height: 40)
+                                                    .background(Color.customBlackColor)
+                                            }
+                                        } else {
                                             Circle().frame(width: 40, height: 40)
                                                 .background(Color.customBlackColor)
                                         }
-                                    } else {
-                                        Circle().frame(width: 40, height: 40)
-                                            .background(Color.customBlackColor)
                                     }
                                 }
+                                .frame(maxWidth: .infinity, alignment: .trailing)
+                                .padding(.top, 20)
                             }
-                            .frame(maxWidth: .infinity, alignment: .trailing)
-                            .padding(.top, 20)
                         }
                     }
+                    .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
+                    .padding(.horizontal, 12)
+                    
+                    VStack {
+                        CButtonComponent(
+                            active: self.responseBtnActive,
+                            buttonLabel: "답변 받기",
+                            onTapGesturedHandler: { responseBtnTapped() }
+                        )
+                    }
+                    .padding(.top, 40)
+                    .id("RESPONSE_BTN")
                 }
-                .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: .leading)
-                .padding(.horizontal, 12)
-                
-                VStack {
-                    CButtonComponent(
-                        active: self.responseBtnActive,
-                        buttonLabel: "답변 받기",
-                        onTapGesturedHandler: { responseBtnTapped() }
-                    )
+                .frame(maxWidth: .infinity)
+                .layoutPriority(1)
+                .onChange(of: self.rootState.chattingItem?.items ?? []) {
+                    withAnimation {
+                        proxy.scrollTo("RESPONSE_BTN", anchor: .bottom)
+                    }
                 }
-                .padding(.top, 40)
             }
-            .frame(maxWidth: .infinity)
-            .layoutPriority(1)
             
             if self.rootState.chattingItem?.createdAt == getCreatedDate() {
                 HStack(spacing: 20) {
@@ -328,12 +335,12 @@ extension MainScreen {
         }
         .onAppear {
             self.loadTitles()
-            self.loadChattingItem(day: 1)
-            self.loadResults(day: 1)
+            self.loadChattingItem(day: self.rootState.day)
+            self.loadResults(day: self.rootState.day)
         }
-        .onChange(of: self.day) {
-            self.loadResults(day: self.day)
-            self.loadChattingItem(day: self.day)
+        .onChange(of: self.rootState.day) {
+            self.loadResults(day: self.rootState.day)
+            self.loadChattingItem(day: self.rootState.day)
         }
     }
 }

@@ -7,8 +7,6 @@ struct MainSideBar: View {
     
     @Binding var sideVisible: Bool
     
-    @Binding var day: Int
-    
     @Query var loginInfos: [LoginInfo]
     
     @Environment(\.modelContext) private var context
@@ -210,7 +208,7 @@ extension MainSideBar {
                         }
                         .frame(height: 24)
                         .onTapGesture {
-                            self.day = index + 1
+                            self.rootState.day = index + 1
                             self.sideVisible = false
                         }
                     }
