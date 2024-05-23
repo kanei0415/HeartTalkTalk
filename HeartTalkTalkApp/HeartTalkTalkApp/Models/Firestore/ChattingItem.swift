@@ -1,6 +1,6 @@
 import Foundation
 
-struct FirebaseChattingItemMessage: Codable {
+struct FirebaseChattingItemMessage: Codable, Equatable {
     var contents: String
     var sender: String
 }

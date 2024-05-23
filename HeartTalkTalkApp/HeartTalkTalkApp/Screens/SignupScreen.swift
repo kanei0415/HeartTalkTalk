@@ -93,7 +93,7 @@ struct SignupScreen: View {
                                 "uid" : loginRes.user.uid,
                                 "name" : self.name,
                                 "createdAt": getCreatedDate(),
-                                "image":  url,
+                                "image":  "https://firebasestorage.googleapis.com\(url.path())?alt=media",
                                 "id": ""
                             ]) else { return }
                     } else {

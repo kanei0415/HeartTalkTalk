@@ -1,5 +1,5 @@
 import * as admin from "firebase-admin";
-import {SERVEY_RESULTS_COLLECTION, ServeyProblemItem, ServeyResult} from "./servey-result.interface";
+import {PsychologicalIndexes, SERVEY_RESULTS_COLLECTION, ServeyProblemItem, ServeyResult} from "./servey-result.interface";
 import openaiService from "../../lib/openai.service";
 
 class ServeyResultService {
@@ -11,7 +11,7 @@ class ServeyResultService {
     return this.getCollectionRef().doc(id);
   }
 
-  async addServeyResult(serveyResult: ServeyProblemItem[], createdAt: number) {
+  async addServeyResult(serveyResult: ServeyProblemItem[], createdAt: number, psychologicalIndexes: PsychologicalIndexes) {
     const docRef = this.getCollectionRef().doc();
 
     const message = (await openaiService.getServeyResultMessage(serveyResult)).choices[0].message.content;
@@ -26,6 +26,7 @@ class ServeyResultService {
       ],
       serveyResult,
       createdAt,
+      psychologicalIndexes,
     } satisfies ServeyResult);
 
     return docRef.id;

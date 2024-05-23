@@ -36,7 +36,7 @@ class FunctionsUtil {
     }
     
     func initialzeCreatedUser(uid: String, name: String, image: String?, createdAt: Int, callback: @escaping Callback) {
-        getFunction(type: .chattingResponseAdd).call(["uid": uid, "name": name, "image": image, "createdAt": createdAt], completion: callback)
+        getFunction(type: .chattingResponseAdd).call(["uid": uid, "name": name, "image": image, "createdAt": createdAt, "id": nil], completion: callback)
     }
     
     func userPurchased(uid: String, callback: @escaping Callback) {

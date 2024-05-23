@@ -2,12 +2,12 @@ import * as functions from "firebase-functions";
 import {FUNCTUONS_REGION} from "../../../config/config";
 import resultsService from "../results/results.service";
 import {CHATTING_CALLECTIONS} from "../chatting.interface";
-import {CHATTING_ITEMS_MAKE_RESULT_UNIT, CHATTING_ITEM_COLLECTIONS, FireStoreChattingItemType, FireStoreChattingItemsType} from "./chatting.items.interface";
+import {CHATTING_ITEMS_MAKE_RESULT_UNIT, CHATTING_ITEM_COLLECTIONS, CHATTING_STAGES, FireStoreChattingItemType, FireStoreChattingItemsType, getNextStage} from "./chatting.items.interface";
 import {FireStoreResultsTypes} from "../results/results.interface";
 import openaiService from "../../../lib/openai.service";
 import usersService from "../../users/users.service";
 import {FireStoreUserType} from "../../users/user.interface";
-import {FieldValue} from "firebase-admin/firestore";
+import {FieldValue, PartialWithFieldValue} from "firebase-admin/firestore";
 import titlesService from "../titles/titles.service";
 import {FireStoreTitleType} from "../titles/titles.interface";
 import chattingItemsService from "./chatting.items.service";
@@ -33,6 +33,19 @@ export const ChattingItemOnUpdated = functions
     }
 
     const systemSendItems = afterChattingItem.items.filter((item) => item.sender === "SYSTEM");
+
+    if (afterChattingItem.items.length && afterChattingItem.items[afterChattingItem.items.length - 1].sender === "SYSTEM") {
+      const configMessage = (await openaiService.getUserConfig(afterChattingItem)).choices[0].message.content;
+
+      const userDocRef = usersService.getDocRefById(uid);
+
+      userDocRef.set(
+        {
+          config: configMessage || "No config exists",
+        } satisfies Partial<FireStoreUserType>,
+        {merge: true},
+      );
+    }
 
     if (systemSendItems.length % CHATTING_ITEMS_MAKE_RESULT_UNIT === 0) {
       if (systemSendItems.length > resultData.items.length * CHATTING_ITEMS_MAKE_RESULT_UNIT) {
@@ -65,15 +78,6 @@ export const ChattingItemOnUpdated = functions
             message: "Nothing Is Completed Results Message Content From OpenAI",
           };
         }
-
-        const userDocRef = usersService.getDocRefById(uid);
-
-        userDocRef.set(
-          {
-            config: resultMessage,
-          } satisfies Partial<FireStoreUserType>,
-          {merge: true},
-        );
 
         resultRef.set(
           {
@@ -170,7 +174,99 @@ export const ChattingResponseAdd = functions.region(FUNCTUONS_REGION).https.onCa
     };
   }
 
-  const responseCompletion = await openaiService.getResponseMessage(uid, prevSenderMessage.contents, userResponse.map((item) => item.contents).join("."));
+  let passedNextStage = false;
+
+  if (chattingItems.stage === CHATTING_STAGES.FIND_PROBLEM_STAGE) {
+    const problem = (await openaiService.findProblem(userResponse)).choices[0].message.content;
+
+    if (problem) {
+      passedNextStage = true;
+
+      chattingItemsDocRef.set(
+        {
+          problems: FieldValue.arrayUnion(problem),
+        } satisfies PartialWithFieldValue<FireStoreChattingItemsType>,
+        {merge: true},
+      );
+    }
+  }
+
+  if (chattingItems.stage === CHATTING_STAGES.FIND_PROBLEM_KEYWORD_STAGE) {
+    const keyword = (await openaiService.findProblemKeyword(userResponse, chattingItems.problems)).choices[0].message.content;
+
+    if (keyword) {
+      passedNextStage = true;
+
+      chattingItemsDocRef.set(
+        {
+          keywords: FieldValue.arrayUnion(keyword),
+        } satisfies PartialWithFieldValue<FireStoreChattingItemsType>,
+        {merge: true},
+      );
+    }
+  }
+
+  if (chattingItems.stage === CHATTING_STAGES.FIND_SOLUTION_STAGE) {
+    const solution = (await openaiService.findSolution(userResponse, chattingItems.problems, chattingItems.keywords)).choices[0].message.content;
+
+    if (solution) {
+      passedNextStage = true;
+
+      chattingItemsDocRef.set(
+        {
+          solutions: FieldValue.arrayUnion(solution),
+        } satisfies PartialWithFieldValue<FireStoreChattingItemsType>,
+        {merge: true},
+      );
+    }
+  }
+
+  if (chattingItems.stage === CHATTING_STAGES.FIND_VALID_SOLUTION_STAGE) {
+    const validSolution = (await openaiService.findValidSolution(userResponse, chattingItems.problems, chattingItems.keywords, chattingItems.solutions)).choices[0].message.content;
+
+    if (validSolution) {
+      passedNextStage = true;
+
+      chattingItemsDocRef.set(
+        {
+          validSolutions: FieldValue.arrayUnion(validSolution),
+        } satisfies PartialWithFieldValue<FireStoreChattingItemsType>,
+        {merge: true},
+      );
+    }
+  }
+
+  if (chattingItems.stage === CHATTING_STAGES.FIND_EXTERNAL_HELP_STAGE) {
+    const externalHelp = (await openaiService.findExternalHelp(userResponse, chattingItems.problems, chattingItems.keywords, chattingItems.solutions, chattingItems.validSolutions)).choices[0].message.content;
+
+    if (externalHelp) {
+      passedNextStage = true;
+
+      chattingItemsDocRef.set(
+        {
+          externalHelp: FieldValue.arrayUnion(externalHelp),
+        } satisfies PartialWithFieldValue<FireStoreChattingItemsType>,
+        {merge: true},
+      );
+    }
+  }
+
+  if (chattingItems.stage === CHATTING_STAGES.FIND_SUBJECT_STAGE) {
+    const subject = (await openaiService.findSubject(userResponse, chattingItems.problems, chattingItems.keywords, chattingItems.solutions, chattingItems.validSolutions, chattingItems.externalHelp)).choices[0].message.content;
+
+    if (subject) {
+      passedNextStage = true;
+
+      chattingItemsDocRef.set(
+        {
+          subjects: FieldValue.arrayUnion(subject),
+        } satisfies PartialWithFieldValue<FireStoreChattingItemsType>,
+        {merge: true},
+      );
+    }
+  }
+
+  const responseCompletion = await openaiService.getResponseMessage(uid, prevSenderMessage.contents, userResponse.map((item) => item.contents).join("."), chattingItems.stage);
 
   if (!responseCompletion) {
     return {
@@ -194,7 +290,8 @@ export const ChattingResponseAdd = functions.region(FUNCTUONS_REGION).https.onCa
         sender: "SYSTEM",
         contents: responseMessageContent,
       } satisfies FireStoreChattingItemType),
-    },
+      stage: passedNextStage ? getNextStage(chattingItems.stage ?? CHATTING_STAGES.FIND_PROBLEM_STAGE) : chattingItems.stage,
+    } satisfies PartialWithFieldValue<FireStoreChattingItemsType>,
     {merge: true},
   );
 
