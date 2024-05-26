@@ -44,7 +44,7 @@ class IamportPaymentViewController: UIViewController {
         requestIamportPayment(userName: user.name, uid: user.uid, callback: { paymentRes in
             if paymentRes != nil {
                 FunctionsUtil.single.userPurchased(uid: user.uid) { res, err in
-                    if let resData = res?.data as? ResponseData {
+                    if let resData = res?.parsedData {
                         self.rootState?.noticeAlarm = "상품 구매가 정상적으로 처리되었습니다"
                     }
                     

@@ -1,7 +1,7 @@
 import Foundation
 import FirebaseFunctions
 
-struct ResponseData {
+struct ResponseData: Decodable {
     let success: Bool
     let message: String
 }

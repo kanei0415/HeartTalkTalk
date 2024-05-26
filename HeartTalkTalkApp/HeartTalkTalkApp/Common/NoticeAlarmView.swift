@@ -8,6 +8,7 @@ struct NoticeAlarmView: View {
             if rootState.noticeAlarm != nil {
                 Color.black.ignoresSafeArea().opacity(0.5).onTapGesture { }
                     .transition(.opacity)
+                    .animation(.easeInOut, value: self.rootState.noticeAlarm)
             }
             
             if let label = rootState.noticeAlarm {
@@ -49,6 +50,7 @@ struct NoticeAlarmView: View {
                     .position(x: gp.size.width / 2, y: gp.size.height / 2)
                 }
                 .transition(.scale)
+                .animation(.easeInOut, value: self.rootState.noticeAlarm)
             }
         }
     }

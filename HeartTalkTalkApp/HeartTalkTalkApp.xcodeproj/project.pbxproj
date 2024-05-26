@@ -67,6 +67,7 @@
 		BCB49B852BF027E100433554 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BCB49B842BF027E100433554 /* RxSwift */; };
 		BCE0C4302C02BB880084283F /* PendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE0C42F2C02BB880084283F /* PendingView.swift */; };
 		BCE0C4322C02D3560084283F /* NoticeAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE0C4312C02D3560084283F /* NoticeAlarmView.swift */; };
+		BCE0C4362C02EE4E0084283F /* HTTPSCallableResultExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE0C4352C02EE4E0084283F /* HTTPSCallableResultExtension.swift */; };
 		BCE95A7F2BF422E6007EA6E5 /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE95A7E2BF422E5007EA6E5 /* ProfileImage.swift */; };
 		BCE95A812BF44B49007EA6E5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BCE95A802BF44B49007EA6E5 /* FirebaseStorage */; };
 		BCF34CC72BF954600070C772 /* ResultScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF34CC62BF954600070C772 /* ResultScreen.swift */; };
@@ -167,6 +168,7 @@
 		BCB49B6E2BEF9FC800433554 /* IamportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IamportView.swift; sourceTree = "<group>"; };
 		BCE0C42F2C02BB880084283F /* PendingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingView.swift; sourceTree = "<group>"; };
 		BCE0C4312C02D3560084283F /* NoticeAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeAlarmView.swift; sourceTree = "<group>"; };
+		BCE0C4352C02EE4E0084283F /* HTTPSCallableResultExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HTTPSCallableResultExtension.swift; sourceTree = "<group>"; };
 		BCE95A7E2BF422E5007EA6E5 /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		BCF34CC62BF954600070C772 /* ResultScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultScreen.swift; sourceTree = "<group>"; };
 		BEA83EFFA5DF04DB41883309 /* Pods_HeartTalkTalkApp_HeartTalkTalkAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeartTalkTalkApp_HeartTalkTalkAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -314,6 +316,7 @@
 				BC7C89A42BE4B0B0001F303A /* ImageExtension.swift */,
 				BC7C89DA2BE4BDB5001F303A /* FontExtension.swift */,
 				BC7C89F62BE63782001F303A /* ViewExtension.swift */,
+				BCE0C4352C02EE4E0084283F /* HTTPSCallableResultExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -629,6 +632,7 @@
 				BCA910552BEC2FDA0020D746 /* LoginInfo.swift in Sources */,
 				BC7C8A102BE6E6C1001F303A /* DateUtil.swift in Sources */,
 				BC7C8A122BE6E947001F303A /* MainScreen.swift in Sources */,
+				BCE0C4362C02EE4E0084283F /* HTTPSCallableResultExtension.swift in Sources */,
 				BCB49B6F2BEF9FC800433554 /* IamportView.swift in Sources */,
 				BC7C89E22BE596E6001F303A /* FeedbackImpact.swift in Sources */,
 				BC7C89DB2BE4BDB5001F303A /* FontExtension.swift in Sources */,
