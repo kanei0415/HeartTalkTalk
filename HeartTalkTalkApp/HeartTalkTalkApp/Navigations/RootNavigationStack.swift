@@ -64,8 +64,13 @@ struct RootNavigationStack: View {
             }
             
             if self.rootState.backDropVisible {
-                Color.customBlackColor.ignoresSafeArea().opacity(0.5).onTapGesture { }
+                ZStack {
+                    Color.customBlackColor.ignoresSafeArea().opacity(0.5).onTapGesture { }
+                    PendingView()
+                }
             }
+            
+            NoticeAlarmView()
         }
     }
 }

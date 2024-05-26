@@ -81,6 +81,8 @@ struct LandingScreen: View {
                 return
             }
             
+            self.rootState.noticeAlarm = "환영합니다 \(userDocData.name) 님"
+            
             self.rootState.user = userDocData
             
             self.setUserData(uid: uid)
@@ -143,7 +145,7 @@ struct LandingScreen: View {
                     
                     initializeCreatedUser.call(requestBody) { response, error in
                         if error != nil {
-                            // TODO: CreatedUserInitialization Failed Alert
+                            self.rootState.noticeAlarm = "로그인에 실패했습니다"
                         } else {
                             Task {
                                 guard let user = try? await userDocRef.getDocument(as: FirestoreUser.self) else {
@@ -152,6 +154,8 @@ struct LandingScreen: View {
                                 
                                 self.rootState.user = user
                                 self.setUserData(uid: user.uid)
+                                
+                                self.rootState.noticeAlarm = "환영합니다 \(user.name) 님"
                             }
                         }
                     }

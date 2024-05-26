@@ -148,9 +148,7 @@ struct MainScreen: View {
         ZStack {
             self.mainScreenView
             
-            if self.sideVisible {
-                MainSideBar(sideVisible: self.$sideVisible)
-            }
+            MainSideBar(sideVisible: self.$sideVisible)
         }
         .navigationBarHidden(true)
     }
@@ -184,9 +182,9 @@ extension MainScreen {
         FunctionsUtil.single.addReport(uid: user.uid, day: self.rootState.day, content: content) { res,err in
             if let data = res?.data as? ResponseData {
                 if data.success {
-                    
+                    self.rootState.noticeAlarm = "정상적으로 신고되었습니다"
                 } else {
-                    
+                    self.rootState.noticeAlarm = "이미 신고된 채팅입니다"
                 }
             }
             
@@ -194,11 +192,14 @@ extension MainScreen {
         }
     }
     
+    
     var mainScreenView: some View {
         VStack {
             HStack {
                 Button(action: {
-                    self.sideVisible.toggle()
+                    withAnimation {
+                        self.sideVisible.toggle()
+                    }
                 }, label: {
                     Image(systemName: "gearshape")
                         .foregroundColor(.customBlackColor)
@@ -259,6 +260,8 @@ extension MainScreen {
                                     }
                                     .offset(x: 40)
                                 }
+                                .transition(.asymmetric(insertion: AnyTransition.move(edge: .leading), removal: .identity))
+                                .animation(.default)
                                 .padding(.top, 20)
                             } else {
                                 VStack(alignment: .trailing) {
@@ -282,6 +285,8 @@ extension MainScreen {
                                         }
                                     }
                                 }
+                                .transition(AnyTransition.asymmetric(insertion: .move(edge: .trailing), removal: .identity))
+                                .animation(.default)
                                 .frame(maxWidth: .infinity, alignment: .trailing)
                                 .padding(.top, 20)
                             }

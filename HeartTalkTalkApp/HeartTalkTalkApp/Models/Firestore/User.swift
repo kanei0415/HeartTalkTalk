@@ -1,7 +1,7 @@
 import Foundation
 import FirebaseFirestore
 
-struct FirestoreUser: Codable {
+struct FirestoreUser: Codable, Equatable {
     var name: String
     var uid: String
     var image: String?

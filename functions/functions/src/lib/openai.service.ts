@@ -7,6 +7,8 @@ import {ChattingStage, FireStoreChattingItemType, FireStoreChattingItemsType, ge
 import {PsychologicalIndexes, ServeyProblemItem} from "../modules/servey-results/servey-result.interface";
 import template from "string-template";
 
+const NODE_ENV = "DEV";
+
 class OpenAIService {
   client = new OpenAI({apiKey: config().openai.apikey});
 

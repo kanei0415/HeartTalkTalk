@@ -11,4 +11,5 @@ class RootEnvironmentObject: ObservableObject {
     @Published var day = 1
     @Published var iamportViewVisible = false
     @Published var backDropVisible = false
+    @Published var noticeAlarm: String? = nil
 }

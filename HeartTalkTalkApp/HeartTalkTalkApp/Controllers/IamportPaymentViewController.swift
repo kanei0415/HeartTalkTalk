@@ -45,7 +45,7 @@ class IamportPaymentViewController: UIViewController {
             if paymentRes != nil {
                 FunctionsUtil.single.userPurchased(uid: user.uid) { res, err in
                     if let resData = res?.data as? ResponseData {
-                        
+                        self.rootState?.noticeAlarm = "상품 구매가 정상적으로 처리되었습니다"
                     }
                     
                     self.rootState?.iamportViewVisible = false
