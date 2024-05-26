@@ -35,17 +35,24 @@ struct MainSideBar: View {
     
     var body: some View {
         ZStack(alignment: .leading) {
-            self.asideView
+            if self.sideVisible {
+                Color.customBlackColor
+                .opacity(0.5)
+                .onTapGesture {
+                    withAnimation {
+                        self.sideVisible = false
+                    }
+                }
+                .transition(.opacity)
+            }
+            
+            if self.sideVisible {
+                self.asideView
+                    .transition(.move(edge: .leading))
+            }
         }
         .ignoresSafeArea()
         .frame(maxWidth: .infinity, maxHeight: .infinity)
-        .background(Color.customBlackColor.opacity(0.5))
-        .onTapGesture {
-            self.sideVisible = false
-        }
-        .onAppear {
-            
-        }
     }
     
     func onLogoutBtnTapped() {
@@ -65,6 +72,10 @@ struct MainSideBar: View {
         FunctionsUtil.single.newChattingCreate(uid: user.uid, createdAt: getCreatedDate()) { res, err in
             self.sideVisible = false
             self.rootState.backDropVisible = false
+            
+            withAnimation {
+                self.rootState.noticeAlarm = "오늘의 상담이 시작되었습니다"
+            }
         }
     }
     

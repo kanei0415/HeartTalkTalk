@@ -65,6 +65,8 @@
 		BCB49B812BF027E100433554 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = BCB49B802BF027E100433554 /* RxCocoa */; };
 		BCB49B832BF027E100433554 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = BCB49B822BF027E100433554 /* RxRelay */; };
 		BCB49B852BF027E100433554 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = BCB49B842BF027E100433554 /* RxSwift */; };
+		BCE0C4302C02BB880084283F /* PendingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE0C42F2C02BB880084283F /* PendingView.swift */; };
+		BCE0C4322C02D3560084283F /* NoticeAlarmView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE0C4312C02D3560084283F /* NoticeAlarmView.swift */; };
 		BCE95A7F2BF422E6007EA6E5 /* ProfileImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCE95A7E2BF422E5007EA6E5 /* ProfileImage.swift */; };
 		BCE95A812BF44B49007EA6E5 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = BCE95A802BF44B49007EA6E5 /* FirebaseStorage */; };
 		BCF34CC72BF954600070C772 /* ResultScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCF34CC62BF954600070C772 /* ResultScreen.swift */; };
@@ -163,6 +165,8 @@
 		BCA910512BE8F37F0020D746 /* IamportPaymentViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IamportPaymentViewController.swift; sourceTree = "<group>"; };
 		BCA910542BEC2FDA0020D746 /* LoginInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginInfo.swift; sourceTree = "<group>"; };
 		BCB49B6E2BEF9FC800433554 /* IamportView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IamportView.swift; sourceTree = "<group>"; };
+		BCE0C42F2C02BB880084283F /* PendingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PendingView.swift; sourceTree = "<group>"; };
+		BCE0C4312C02D3560084283F /* NoticeAlarmView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoticeAlarmView.swift; sourceTree = "<group>"; };
 		BCE95A7E2BF422E5007EA6E5 /* ProfileImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileImage.swift; sourceTree = "<group>"; };
 		BCF34CC62BF954600070C772 /* ResultScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultScreen.swift; sourceTree = "<group>"; };
 		BEA83EFFA5DF04DB41883309 /* Pods_HeartTalkTalkApp_HeartTalkTalkAppUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HeartTalkTalkApp_HeartTalkTalkAppUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -321,6 +325,8 @@
 				BC7C89DC2BE4CBE8001F303A /* CButtonComponent.swift */,
 				BCB49B6E2BEF9FC800433554 /* IamportView.swift */,
 				BCE95A7E2BF422E5007EA6E5 /* ProfileImage.swift */,
+				BCE0C42F2C02BB880084283F /* PendingView.swift */,
+				BCE0C4312C02D3560084283F /* NoticeAlarmView.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -614,8 +620,10 @@
 				BC7C89E62BE59FE7001F303A /* RootEnvironmentObject.swift in Sources */,
 				BCE95A7F2BF422E6007EA6E5 /* ProfileImage.swift in Sources */,
 				BCF34CC72BF954600070C772 /* ResultScreen.swift in Sources */,
+				BCE0C4322C02D3560084283F /* NoticeAlarmView.swift in Sources */,
 				BC7C89E92BE5A084001F303A /* RootNavigationStack.swift in Sources */,
 				BC7C89A52BE4B0B0001F303A /* ImageExtension.swift in Sources */,
+				BCE0C4302C02BB880084283F /* PendingView.swift in Sources */,
 				BC7C8A0A2BE6E3D4001F303A /* Functions.swift in Sources */,
 				BC7C89F52BE63546001F303A /* OAuth.swift in Sources */,
 				BCA910552BEC2FDA0020D746 /* LoginInfo.swift in Sources */,

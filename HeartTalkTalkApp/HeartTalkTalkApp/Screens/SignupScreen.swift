@@ -122,6 +122,8 @@ struct SignupScreen: View {
                         return
                     }
                     
+                    self.rootState.noticeAlarm = "환영합니다 \(userDocData.name) 님"
+                    
                     self.rootState.path.removeLast()
                     
                     self.rootState.user = userDocData
@@ -188,12 +190,14 @@ struct SignupScreen: View {
                     
                     initializeCreatedUser.call(requestBody) { response, error in
                         if error != nil {
-                            // TODO: CreatedUserInitialization Failed Alert
+                            self.rootState.noticeAlarm = "회원가입에 실패했습니다"
                         } else {
                             Task {
                                 guard let user = try? await userDocRef.getDocument(as: FirestoreUser.self) else {
                                     return
                                 }
+                                
+                                self.rootState.noticeAlarm = "환영합니다 \(user.name) 님"
                                 
                                 self.rootState.user = user
                                 self.setUserData(uid: user.uid)
@@ -208,6 +212,8 @@ struct SignupScreen: View {
                 self.setUserData(uid: result.uid)
                 
                 self.rootState.backDropVisible = false
+                
+                self.rootState.noticeAlarm = "환영합니다 \(result.name) 님"
             }
         }
     }
