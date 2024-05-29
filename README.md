@@ -1,7 +1,3 @@
-# HeartTalkTalk
-
-마음톡톡: AI 기반 심리 케어 서비스
-
 # 백엔드 가동 명령어
 
 ### 필수사항
@@ -21,3 +17,5 @@ cd heart-talk-talk && yarn start
 # 백엔드, 프론트 모두 가동 후에 웹 페이지
 
 http://localhost:3000
+=======
+https://hearttalktalk-fab03.web.app
