@@ -48,7 +48,7 @@ struct MainScreen: View {
         }
         
         FunctionsUtil.single.chattingResponseAdd(uid: user.uid, day: self.rootState.day) { res, err in
-            guard let resData = res?.data as? ResponseData else {
+            guard let resData = res?.parsedData else {
                 self.rootState.backDropVisible = false
                 
                 return;
@@ -180,7 +180,7 @@ extension MainScreen {
         self.rootState.backDropVisible = true
         
         FunctionsUtil.single.addReport(uid: user.uid, day: self.rootState.day, content: content) { res,err in
-            if let data = res?.data as? ResponseData {
+            if let data = res?.parsedData {
                 if data.success {
                     self.rootState.noticeAlarm = "정상적으로 신고되었습니다"
                 } else {
