@@ -7,8 +7,10 @@ import {ChattingStage, FireStoreChattingItemType, FireStoreChattingItemsType, ge
 import {PsychologicalIndexes, ServeyProblemItem} from "../modules/servey-results/servey-result.interface";
 import template from "string-template";
 
+const NODE_ENV = "DEV";
+
 class OpenAIService {
-  client = new OpenAI({apiKey: config().openai.apikey});
+  client = new OpenAI({apiKey: NODE_ENV === "DEV" ? "sk-proj-N83PCwHOrdXjU2KwmZtwT3BlbkFJdUeQhaJLct6VGlhf0m0g" : config().openai.apikey});
 
   async getResponseMessage(uid: string, prevSystemQuestion: string, patientsResponse: string, stage: ChattingStage) {
     const user = await usersService.findUserById(uid);
