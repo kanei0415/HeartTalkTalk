@@ -5,5 +5,5 @@ func getCreatedDate() -> Int {
     
     formatter.dateFormat = "yyyyMd"
     
-    return Int(formatter.string(from: Date.now)) ?? 202457
+    return Int(formatter.string(from: Date.now)) ?? 2021615
 }

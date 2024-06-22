@@ -174,7 +174,7 @@ export const ChattingResponseAdd = functions.region(FUNCTUONS_REGION).https.onCa
     };
   }
 
-  let passedNextStage = false;
+  let passedNextStage = true;
 
   if (chattingItems.stage === CHATTING_STAGES.FIND_PROBLEM_STAGE) {
     const problem = (await openaiService.findProblem(userResponse)).choices[0].message.content;
